@@ -34,6 +34,9 @@ function currentUser() {
     }
 }
 
+const URL = import.meta.env.VITE_APP_API_URL;
+console.log(URL)
+
 
 async function signIn(email, password, onSuccess, onFailure) {
     
@@ -44,7 +47,7 @@ async function signIn(email, password, onSuccess, onFailure) {
         }
     }
     const response = await fetch(
-        "http://localhost:3000/sign_in", {
+        `${URL}/sign_in`, {
         method: "POST",
         headers: {
             "Accept": "application/json",

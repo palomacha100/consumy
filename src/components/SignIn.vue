@@ -23,7 +23,7 @@
 <template>
     <div>
         <h1>Sign In</h1>
-        <form @submit.prevent="onSubmit()">
+        <form @submit.prevent="onSubmit">
             <label>E-Mail: </label>
             <input v-model="email" type="email">
             <br />
