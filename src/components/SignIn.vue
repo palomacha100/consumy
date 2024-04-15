@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { useRouter } from 'vue-router'
     import { ref } from 'vue'
-    import { auth } from '../auth.ts'
+    import { auth } from '../auth'
 
     const router = useRouter()
     const email = defineModel('email')

@@ -1,4 +1,5 @@
 import { storage } from "./storage"
+import Swal from 'sweetalert2'
 
 function success(response, onSuccess) {
     response.json().then((json) => {
@@ -55,6 +56,13 @@ async function signIn(email, password, onSuccess, onFailure) {
             success(response, onSuccess)
         } else {
             failure(response, onFailure)
+            console.log(response)
+            Swal.fire({
+                icon: "error",
+                title: `${response.status}`,
+                text: `${response.statusText}`,
+                confirmButtonColor: '#2C5C8F',
+              });
         }
     })
 }
