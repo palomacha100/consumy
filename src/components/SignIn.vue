@@ -4,13 +4,13 @@
     import { auth } from '../auth'
 
     const router = useRouter()
-    const email = defineModel('email')
-    const password = defineModel('password')
+    const email = defineModel<string>('email')
+    const password = defineModel<string>('password')
     const awaiting = ref(false)
 
-    function onSubmit(form) {
+    function onSubmit(form: Event) {
         awaiting.value = true
-        auth.signIn(email.value, password.value, () => {
+        auth.signIn(email.value || '', password.value || '', () => {
             awaiting.value = false
             router.push('/')
         }, () => {

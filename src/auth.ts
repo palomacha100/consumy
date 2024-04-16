@@ -1,14 +1,14 @@
 import { storage } from "./storage"
 import Swal from 'sweetalert2'
 
-function success(response, onSuccess) {
+function success(response: Response, onSuccess: () => void) {
     response.json().then((json) => {
     storage.store('token', json.token)
     storage.store('email', json.email)
     onSuccess()
     })
    }
-function failure(response, onFailure) {
+function failure(response: Response, onFailure: () => void) {
     onFailure()
 }
 
@@ -16,13 +16,12 @@ function loggedIn() {
     return Boolean(storage.get('token'))
 }
 
-function signOut(andThen = null) {
+function signOut(andThen: () => void = () => {}) {
     storage.remove('token')
     storage.remove('email')
 
-    if(typeof(andThen) == 'function') {
         andThen()
-    }
+
 }
 
 function currentUser() {
@@ -38,7 +37,12 @@ const URL = import.meta.env.VITE_APP_API_URL;
 console.log(URL)
 
 
-async function signIn(email, password, onSuccess, onFailure) {
+async function signIn(
+    email: string, 
+    password: string, 
+    onSuccess: () => void, 
+    onFailure: () => void
+    ) {
     
     const body = {
         login:{
