@@ -125,7 +125,7 @@ function handlePassword() {
         text="Não tem uma conta?"
         width="11rem"
         height="2.8rem"
-        className="grey-bold-text"
+        className="gray-bold-text"
       />
       <nav>
         <RouterLink :to="{ name: 'signUp' }">
