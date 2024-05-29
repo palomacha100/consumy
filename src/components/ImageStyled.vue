@@ -11,7 +11,7 @@ defineProps<{
 </script>
 
 <template>
-  <div>
+  <div class="image-styled-container">
     <img :src="imageUrl" :alt="altText" :style="{ width, height }" v-if="!permitedUpload" />
     <InputStyled
       v-if="permitedUpload"
@@ -24,3 +24,10 @@ defineProps<{
     />
   </div>
 </template>
+
+<style scope>
+.image-styled-container {
+  display: flex;
+  justify-content: center;
+}
+</style>

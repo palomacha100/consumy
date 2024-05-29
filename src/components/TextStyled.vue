@@ -42,8 +42,8 @@ div {
   color: var(--white);
   font-size: 0.875rem;
 }
-.blue-bold-text p {
-  color: var(--dark-blue);
+.red-bold-text p {
+  color: var(--red);
   font-weight: 700;
 }
 .gray-bold-text p {

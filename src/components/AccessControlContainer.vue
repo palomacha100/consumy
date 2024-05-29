@@ -28,7 +28,7 @@ export default defineComponent({
 .image-container {
   height: 100vh;
   width: 50%;
-  background-image: url('../../images/fast-food.jpg');
+  background-image: url('../../images/hamburger.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

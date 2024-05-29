@@ -27,9 +27,9 @@ export default defineComponent({
       </nav>
     </div>
     <TextStyled
-      text="Conecte sua loja a milhões de novos clientes"
+      text="Descubra sabores incríveis com a rapidez que você precisa"
       className="main-text"
-      width="50rem"
+      width="65rem"
       height="2.8rem"
     />
   </div>
@@ -40,7 +40,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-image: url('../../images/fast-food.jpg');
+  background-image: url('../../images/hamburger.jpg');
   opacity: 0.9;
   width: 100vw;
   height: 100vh;
