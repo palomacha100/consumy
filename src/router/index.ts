@@ -8,7 +8,7 @@ import WelcomeView from '@/views/WelcomeView.vue'
 //import ProductView from '@/views/ProductView.vue'
 //import ListingStoresView from '@/views/ListingStoresView.vue'
 //import ListingProductsView from '@/views/ListingProductsView.vue'
-//import { Auth } from '@/auth'
+import { Auth } from '@/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,7 +65,7 @@ const router = createRouter({
     }*/
   ]
 })
-/*router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   const auth = new Auth()
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!auth.isLoggedIn()) {
@@ -78,6 +78,6 @@ const router = createRouter({
   } else {
     next()
   }
-})*/
+})
 
 export default router

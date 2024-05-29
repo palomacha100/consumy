@@ -34,18 +34,19 @@ button {
 }
 
 .login-button {
-  background-color: var(--dark-blue);
+  background-color: var(--red);
   color: white;
   border: none;
 }
 
 .login-button:hover {
-  background-color: var(--hover-blue);
+  background-color: var(--red);
+  opacity: 0.8;
 }
 
-.transparent-button-blue-text {
+.transparent-button-red-text {
   background-color: transparent;
-  color: var(--dark-blue);
+  color: var(--red);
   border: none;
 }
 
