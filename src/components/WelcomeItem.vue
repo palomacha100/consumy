@@ -1,87 +1,65 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+import ImageStyled from './ImageStyled.vue'
+import ButtonStyled from './ButtonStyled.vue'
+import TextStyled from './TextStyled.vue'
+
+export default defineComponent({
+  components: {
+    ImageStyled,
+    ButtonStyled,
+    TextStyled
+  }
+})
+</script>
 <template>
-  <div class="item">
-    <i>
-      <slot name="icon"></slot>
-    </i>
-    <div class="details">
-      <h3>
-        <slot name="heading"></slot>
-      </h3>
-      <slot></slot>
+  <div class="main-container">
+    <div class="header-container">
+      <ImageStyled
+        imageUrl="../../images/logo.png"
+        altText="Logo com nome do app Link to Food em azul"
+        width="7.5rem"
+      />
+      <nav>
+        <RouterLink :to="{ name: 'signIn' }">
+          <ButtonStyled className="login-button" label="Começar" width="9.75rem" height="3rem" />
+        </RouterLink>
+      </nav>
     </div>
+    <TextStyled
+      text="Conecte sua loja a milhões de novos clientes"
+      className="main-text"
+      width="50rem"
+      height="2.8rem"
+    />
   </div>
 </template>
 
 <style scoped>
-.item {
-  margin-top: 2rem;
+.main-container {
   display: flex;
-  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-image: url('../../images/fast-food.jpg');
+  opacity: 0.9;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.details {
-  flex: 1;
-  margin-left: 1rem;
+.main-container > div:nth-child(2) {
+  margin: auto;
 }
 
-i {
+.header-container {
   display: flex;
-  place-items: center;
-  place-content: center;
-  width: 32px;
-  height: 32px;
-
-  color: var(--color-text);
-}
-
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
-}
-
-@media (min-width: 1024px) {
-  .item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
-  }
-
-  i {
-    top: calc(50% - 25px);
-    left: -26px;
-    position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .item:before {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:after {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:first-of-type:before {
-    display: none;
-  }
-
-  .item:last-of-type:after {
-    display: none;
-  }
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 100vw;
+  height: 5.7rem;
+  padding: 0 24px;
+  background-color: var(--white);
 }
 </style>

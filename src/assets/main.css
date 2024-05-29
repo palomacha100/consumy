@@ -1,35 +1,31 @@
-@import './base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+:root {
+  --dark-blue: #2c5c8f;
+  --white: #fff;
+  --dark-gray: #48484d;
+  --red: #cc4b4e;
+  --yellow: #ede4a1;
+  --light-blue: #b8c9e6;
+  --green: #33a33c;
+  --purple: #504c9c;
+  --medium-blue: #1bded8;
+  --hover-blue: #142a42;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+ul,
+li {
+  list-style: none;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgba(237, 228, 161, 0.2);
 }
