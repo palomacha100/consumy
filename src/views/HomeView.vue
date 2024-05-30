@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { Auth } from '../auth'
 import { useRouter } from 'vue-router';
+import MenuStyled from '@/components/MenuStyled.vue';
 const auth = new Auth()
 const isLoggedIn = ref(auth.isLoggedIn())
 const currentUser = ref(auth.currentUser())
@@ -20,6 +21,7 @@ const signOut = () => {
 
 <template>
   <main>
+    <MenuStyled/>
     <h3>Olá, {{ currentUser && currentUser.email }}</h3>
 
     <br />

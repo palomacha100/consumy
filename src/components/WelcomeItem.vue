@@ -17,7 +17,7 @@ export default defineComponent({
     <div class="header-container">
       <ImageStyled
         imageUrl="../../images/logo.png"
-        altText="Logo com nome do app Link to Food em azul"
+        altText="Logo com nome do app Link to Food em vermelho"
         width="7.5rem"
       />
       <nav>
