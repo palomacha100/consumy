@@ -111,12 +111,15 @@ function handlePassword() {
       />
       <span>{{ errorCredential }}</span>
     </form>
-    <ButtonStyled
+    <nav>
+      <RouterLink :to="{ name: 'rememberPassword' }"
+        ><ButtonStyled
           className="transparent-button-red-text"
           label="Esqueceu a senha?"
           width="11rem"
           height="3rem"
-      />
+      /></RouterLink>
+    </nav>
     <div class="sign-up-container">
       <TextStyled
         text="Não tem uma conta?"
@@ -124,14 +127,16 @@ function handlePassword() {
         height="2.8rem"
         className="gray-bold-text"
       />
-     
+      <nav>
+        <RouterLink :to="{ name: 'signUp' }">
           <ButtonStyled
             className="transparent-button-red-text"
             label="Cadastre-se"
             width="8rem"
             height="2.8rem"
           />
-        
+        </RouterLink>
+      </nav>
     </div>
   </AccessControlContainer>
 </template>

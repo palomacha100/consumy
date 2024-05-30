@@ -8,7 +8,6 @@ import AccessControlContainer from './AccessControlContainer.vue'
 import TextStyled from './TextStyled.vue'
 
 const router = useRouter()
-
 const email = defineModel<string>('email', { default: '' })
 const password = defineModel<string>('password', { default: '' })
 const password_confirmation = defineModel<string>('password_confirmation', { default: '' })
@@ -16,9 +15,7 @@ const errorEmail = ref<string>('')
 const errorPassword = ref<string>('')
 const errorPasswordConfirmation = ref<string>('')
 const registerError = ref<string>('')
-
 const awaiting = ref<boolean>(false)
-
 const auth = new Auth()
 
 function handleEmail() {
@@ -72,7 +69,7 @@ function onSubmit() {
   <AccessControlContainer>
     <form @submit.prevent="onSubmit">
       <TextStyled
-        text="Cadastre-se para criar sua loja e vender seus produtos."
+        text="Cadastre-se para criar seu perfil e efetuar compras."
         className="gray-text"
         width="22.5rem"
         height="2.8rem"
@@ -127,7 +124,7 @@ function onSubmit() {
     <nav>
       <RouterLink :to="{ name: 'signIn' }">
         <ButtonStyled
-          className="transparent-button-blue-text"
+          className="transparent-button-red-text"
           label="Voltar ao login"
           width="8rem"
           height="2.8rem"

@@ -1,4 +1,4 @@
-const URL = import.meta.env.VITE_API_URL
+const URL = import.meta.env.VITE_APP_API_URL
 const X_API_KEY = import.meta.env.VITE_X_API_KEY
 
 import { createStorage, type SimpleStorage } from './utils/storage'

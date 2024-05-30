@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import SignIn from '@/components/SignIn.vue'
-//import RegisterView from '@/views/RegisterView.vue'
-//import RememberPasswordView from '@/views/RememberPasswordView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import RememberPasswordView from '@/views/RememberPasswordView.vue'
 import WelcomeView from '@/views/WelcomeView.vue'
-//import ProfileView from '@/views/ProfileView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 //import ProductView from '@/views/ProductView.vue'
 //import ListingStoresView from '@/views/ListingStoresView.vue'
 //import ListingProductsView from '@/views/ListingProductsView.vue'
@@ -29,7 +29,7 @@ const router = createRouter({
       name: 'signIn',
       component: SignIn
     },
-    /*{
+    {
       path: '/signUp',
       name: 'signUp',
       component: RegisterView
@@ -45,7 +45,7 @@ const router = createRouter({
       component: ProfileView,
       meta: { requiresAuth: true }
     },
-    {
+    /*{
       path: '/products',
       name: 'products',
       component: ProductView,
