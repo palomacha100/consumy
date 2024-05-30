@@ -32,7 +32,7 @@ const toggleAvatarDropdown = () => {
                 <a class="nav-link" href="#">Pedidos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Produtos</a>
+                <a class="nav-link" href="#">Lojas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Estatísticas</a>

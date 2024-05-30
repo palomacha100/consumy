@@ -511,7 +511,7 @@ const handleEdit = () => {
               height="2.5rem"
             />
             <nav>
-              <RouterLink :to="{ name: 'listingStores' }">
+         
                 <ButtonStyled
                 
                   type="submit"
@@ -520,7 +520,7 @@ const handleEdit = () => {
                   width="10rem"
                   height="2.5rem"
                 />
-              </RouterLink>
+       
             </nav>
           </div>
         </div>

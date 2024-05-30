@@ -18,7 +18,7 @@ defineProps<{
   align-items: center;          
 }
 .title-styled h1 {
-  color: var(--dark-blue);
+  color: var(--red);
   font-size: 2rem;
 }
 </style>
