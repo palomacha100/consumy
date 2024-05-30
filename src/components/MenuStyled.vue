@@ -56,7 +56,7 @@ const toggleAvatarDropdown = () => {
             </a>
             <div class="dropdown" @click="toggleAvatarDropdown">
                 <a class="icons dropdown-toggle" href="#">
-                    <img class="avatar-image" src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="User image"/>
+                    <img class="avatar-image" src="../../public/images/mood.png" alt="User image"/>
                 </a>
                 <ul class="dropdown-menu" v-if="showAvatarDropdown">
                     <li><a class="dropdown-item" href="#">Meu perfil</a></li>
