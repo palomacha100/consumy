@@ -2,10 +2,17 @@
 import { ref } from 'vue';
 import ImageStyled from './ImageStyled.vue';
 
-const showDropdown = ref(false);
+const showNotificationDropdown = ref(false);
+const showAvatarDropdown = ref(false);
 
-const toggleDropdown = () => {
-  showDropdown.value = !showDropdown.value;
+const toggleNotificationDropdown = () => {
+  showNotificationDropdown.value = !showNotificationDropdown.value;
+  showAvatarDropdown.value = false;
+};
+
+const toggleAvatarDropdown = () => {
+  showAvatarDropdown.value = !showAvatarDropdown.value;
+  showNotificationDropdown.value = false;
 };
 </script>
 
@@ -33,50 +40,32 @@ const toggleDropdown = () => {
         </ul>
 
         <div class="nav-icon">
-            <a class="icons" href="#" >
-                <img src="../assets/notification-bell.svg" alt="Notification bell" height="24">
-                <span class="notification">1</span>
-            </a>
-            <a class="icons" href="#">
+            <div class="dropdown" @click="toggleNotificationDropdown">
+                <a class="icons" href="#" >
+                    <img src="../assets/notification-bell.svg" alt="Notification bell" height="24">
+                    <span class="notification">1</span>
+                </a>
+                <ul class="dropdown-menu" v-if="showNotificationDropdown">
+                    <li><a class="dropdown-item" href="#">Notificação 1</a></li>
+                    <li><a class="dropdown-item" href="#">Notificação 2</a></li>
+                </ul>
+            </div>
+            <a class="icons" href="order">
                 <img src="../assets/shopping-cart.svg" alt="Shopping cart" height="24"/>
                 <span class="notification">1</span>
             </a>
-            <div class="dropdown" @click="toggleDropdown">
+            <div class="dropdown" @click="toggleAvatarDropdown">
                 <a class="icons dropdown-toggle" href="#">
                     <img class="avatar-image" src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="User image"/>
                 </a>
-                <ul class="dropdown-menu" v-if="showDropdown">
+                <ul class="dropdown-menu" v-if="showAvatarDropdown">
                     <li><a class="dropdown-item" href="#">Meu perfil</a></li>
                     <li><a class="dropdown-item" href="#">Sair</a></li>
-          </ul>
-        </div>
+                </ul>
+            </div>
         </div>
  
       </div>
- 
-
-      <!-- Right elements -->
-      <div class="d-flex align-items-center">
-
-      
-
-        <div class="dropdown">
-          
-          <ul>
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </div>
-       
-
-        </div>
     </nav>
   </template>
 
@@ -101,6 +90,7 @@ img {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 .navbar {
   background-color: var(--white);
@@ -143,8 +133,10 @@ img {
   background-color: var(--white);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  min-width: 160px;
+  min-width: 100px;
   z-index: 1;
+  padding: 5px;
+  margin: 10px;
 }
 
 .dropdown-item {
@@ -154,8 +146,12 @@ img {
 }
 
 .dropdown-item:hover {
-  background-color: var(--dark-blue);
   color: var(--white);
+}
+
+.dropdown li:hover {
+    background-color: var(--dark-blue);
+    border-radius: 2px;
 }
 
 .notification {
