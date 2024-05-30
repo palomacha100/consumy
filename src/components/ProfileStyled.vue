@@ -262,21 +262,19 @@ const handleEdit = () => {
   <template v-if="isStoreExists || isEditing">
     <div class="main-container">
       <form>
-        <ContainerStyled width="800px" height="4rem" backgroundColor="transparent">
+        <ContainerStyled width="800px" height="4.5rem" backgroundColor="transparent">
           <TitleStyled title="Edição de perfil" />
         </ContainerStyled>
-        
-       
           <InputStyled
-          v-model="fullName"
-          id="fullName"
-          type="text"
-          width="100%"
-          height="2.8rem"
-          placeholder="Digite seu nome completo"
-          borderColor="transparent"
-          :error="errors.fullName"
-          :handleChange="handleFullName"
+            v-model="fullName"
+            id="fullName"
+            type="text"
+            width="100%"
+            height="2.8rem"
+            placeholder="Digite seu nome completo"
+            borderColor="transparent"
+            :error="errors.fullName"
+            :handleChange="handleFullName"
           />
           <div class="data-container">
             <InputStyled
@@ -358,12 +356,6 @@ const handleEdit = () => {
               disabled
               />
           </div>
-            
-      
-
-      
-          
-          
         <InputStyled
           v-model="address"
           id="address"
@@ -374,7 +366,7 @@ const handleEdit = () => {
           borderColor="transparent"
           disabled
         />
-        <div class="address-content">
+        <div class="data-container">
           <InputStyled
             v-model="numberAddress"
             id="numberAddress"
@@ -413,17 +405,6 @@ const handleEdit = () => {
   <template v-else>
     <div class="main-container">
       <div class="profile">
-        <div class="image-styled">
-          <div class="product-image">
-            <img
-              class="img-content"
-              :src="imageUrl"
-              v-if="imageUrl"
-              accept="image/*"
-              id="imagePreview"
-            />
-          </div>
-        </div>
         <div class="data-text-container">
           <TitleStyled :title="`${fullName}`" class="title-styled" />
           <TextStyled
@@ -506,13 +487,6 @@ form {
   display: flex;
   flex-direction: row;
   gap: 5px;
-  justify-content: space-between;
-}
-
-.address-content {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
   justify-content: space-between;
 }
 
