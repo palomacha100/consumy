@@ -4,7 +4,7 @@ abstract class BaseService {
   protected apiUrl: string
   storage: SimpleStorage
   constructor() {
-    this.apiUrl = import.meta.env.VITE_API_URL
+    this.apiUrl = import.meta.env.VITE_APP_API_URL
     const persistent: boolean = this.whatIsMyStorage()
     this.storage = createStorage(persistent)
   }
@@ -37,7 +37,6 @@ abstract class BaseService {
 
   async update(id: number, path: string, data: any): Promise<Response> {
     const token = this.getFallback('token')
-    console.log(id, path, data)
     const response = await fetch(`${this.apiUrl}/${path}/${id}`, {
       method: 'PUT',
       headers: {
