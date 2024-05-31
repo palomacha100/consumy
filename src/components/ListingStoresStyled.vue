@@ -55,6 +55,10 @@ const filteredStores = computed(() => {
 onMounted(() => {
   fetchStores()
 })
+
+const showProducts = (id: number) => {
+  router.push({path: './listingProducts', query: { id }})
+}
 </script>
 
 <template>
@@ -97,6 +101,7 @@ onMounted(() => {
               label="Ver produtos"
               width="8rem"
               height="2rem"
+              @click="showProducts(store.id)"
                 />
           </td>
         </tr>
@@ -105,7 +110,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .thumbnail {
   width: 50px;
   height: 50px;
