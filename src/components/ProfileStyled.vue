@@ -4,7 +4,6 @@ import ButtonStyled from '../components/ButtonStyled.vue'
 import InputStyled from '../components/InputStyled.vue'
 import TextStyled from '../components/TextStyled.vue'
 import TitleStyled from '../components/TitleStyled.vue'
-import { StoreService } from '@/api/storeService'
 import Swal from 'sweetalert2'
 import { useRoute } from 'vue-router'
 import ContainerStyled from '../components/ContainerStyled.vue'
@@ -19,12 +18,9 @@ const neighborhood = defineModel<string>('neighborhood', { default: '' })
 const address = defineModel<string>('address', { default: '' })
 const numberAddress = defineModel<string>('numberAddress')
 const complementAddress = defineModel<string>('complementAddress', { default: '' })
-const establishment = defineModel<string>('establishment', { default: '' })
 const isStoreExists = ref(false)
 const isEditing = ref(false)
 const route = useRoute()
-
-const store = new StoreService()
 
 const errors = reactive({
   fullName: '',
@@ -99,7 +95,7 @@ const handlePhoneInput = (event: InputEvent) => {
   phoneNumber.value = newValue
 }
 
-const canMoveToTab2 = () => {
+const canCompleteProfile = () => {
   return (
     fullName.value !== '' &&
     cpf.value !== undefined &&
@@ -169,39 +165,14 @@ onMounted(() => {
       getModelByName[field as keyof typeof getModelByName].value = storeSeller
     }
   })
-  const storeData = localStorage.getItem('store') || ''
-  const storeSeller = storeData ? storeData : null
-  if (storeSeller !== null) {
-    imageUrl.value = JSON.parse(storeSeller).src
-  }
+    
   if (!address.value && !isStoreExists.value) {
     isStoreExists.value = true
   }
   if (route.query.isEditing === 'true') {
     isEditing.value = true
-
-    store.getStoresById(
-      Number(route.query.id),
-      (storeData: any) => {
-        fullName.value = storeData.name
-        cpf.value = storeData.cnpj
-        phoneNumber.value = storeData.phonenumber
-        city.value = storeData.city
-        cep.value = storeData.cep
-        state.value = storeData.state
-        neighborhood.value = storeData.neighborhood
-        address.value = storeData.address
-        numberAddress.value = storeData.numberaddress
-        complementAddress.value = storeData.complementadress
-
-        isStoreExists.value = true
-      },
-      () => {
-        console.error('Failed to fetch profile')
-      }
-    )
   }
-  if (route.query.isNewStore === 'true') {
+  if (route.query.isNewProduct === 'true') {
     isEditing.value = true
     fullName.value = ''
     cpf.value = ''
@@ -216,41 +187,12 @@ onMounted(() => {
   }
 })
 
-let image: File
-
-const imageUrl = ref('')
-
-const handleCreateStore = () => {
-  const boolean = canMoveToTab2()
-  if (boolean)
-    store.createStore(
-      getModelByName,
-      image,
-      () => Swal.fire('Perfil salvo com sucesso'),
-      () => Swal.fire('Erro ao salvar perfil')
-    )
+const handleCreateProfile = () => {
+  Swal.fire("Dados salvos com sucesso");
 }
 
-const handleUpdateStore = () => {
-  const boolean = canMoveToTab2()
-  const getId = sessionStorage.getItem('active') || ''
-  const parse = getId ? JSON.parse(getId) : ''
-  if (boolean) {
-    store.updateStore(
-      parse,
-      getModelByName,
-      image,
-      () => {
-        const getId = store.storage.get('store') || ''
-        const parse = getId ? JSON.parse(getId) : ''
-        imageUrl.value = parse.src
-        isEditing.value = false
-        Swal.fire('Loja atualizada com sucesso')
-        isStoreExists.value = false
-      },
-      () => Swal.fire('Erro ao atualizar loja')
-    )
-  }
+const handleUpdateProfile = () => {
+  Swal.fire("Perfil atualizado com sucesso");
 }
 
 const handleEdit = () => {
@@ -391,7 +333,7 @@ const handleEdit = () => {
         </div>
         <div class="button-container">
           <ButtonStyled
-            @click.prevent="isEditing ? handleUpdateStore() : handleCreateStore()"
+            @click.prevent="isEditing ? handleUpdateProfile() : handleCreateProfile()"
             type="submit"
             className="login-button"
             :label="isEditing ? 'Atualizar' : 'Enviar'"
@@ -405,29 +347,29 @@ const handleEdit = () => {
   <template v-else>
     <div class="main-container">
       <div class="profile">
-        <div class="data-text-container">
+       
           <TitleStyled :title="`${fullName}`" class="title-styled" />
           <TextStyled
             className="gray-text"
-            width=" 350px"
+            width=" 800px"
             height="2.5rem"
             :text="`CPF: ${cpf}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 350px"
+            width=" 800px"
             height="2.5rem"
             :text="`Telefone: ${phoneNumber}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 350px"
+            width=" 800px"
             height="2.5rem"
             :text="`Endereço: ${address}, ${numberAddress}, ${complementAddress}, ${neighborhood}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 350px"
+            width=" 800px"
             height="2.5rem"
             :text="`CEP: ${cep} - ${city} - ${state}`"
           />
@@ -437,25 +379,24 @@ const handleEdit = () => {
               type="submit"
               className="login-button"
               label="Editar"
-              width="10rem"
+              width="15rem"
               height="2.5rem"
             />
             <nav>
-         
+              <RouterLink :to="{ name: 'home' }">
                 <ButtonStyled
-                
                   type="submit"
                   className="login-button"
-                  label="Gerenciar lojas"
-                  width="10rem"
+                  label="Voltar ao início"
+                  width="15rem"
                   height="2.5rem"
                 />
-       
+              </RouterLink>
             </nav>
           </div>
         </div>
       </div>
-    </div>
+    
   </template>
 </template>
 
@@ -476,13 +417,6 @@ form {
   height: 100%;
 }
 
-.data-text-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .data-container {
   display: flex;
   flex-direction: row;
@@ -497,7 +431,7 @@ form {
 }
 
 .title-styled {
-  width: 350px;
+  width: 800px;
 }
 
 .button-container {
@@ -514,7 +448,7 @@ form {
   display: flex;
   background-color: var(--white);
   justify-content: space-around;
-  flex-direction: row;
+  flex-direction: column;
   margin: 30px auto;
   width: 800px;
   height: auto;
