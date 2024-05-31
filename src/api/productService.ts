@@ -5,8 +5,8 @@ class ProductService extends BaseService {
     super()
   }
 
-  async getProducts(id: number, onSuccess: (data: any) => void, onFailure: () => void) {
-    const response = await this.getEntity(`stores/${id}/products`)
+  async getProducts(id: number, onSuccess: (data: any) => void, onFailure: () => void, page=1) {
+    const response = await this.getEntity(`stores/${id}/products?page=${page}&locale=pt-BR`)
     if (response.ok) {
       this.success(response, onSuccess)
     } else {

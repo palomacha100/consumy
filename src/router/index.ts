@@ -5,9 +5,8 @@ import RegisterView from '@/views/RegisterView.vue'
 import RememberPasswordView from '@/views/RememberPasswordView.vue'
 import WelcomeView from '@/views/WelcomeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-//import ProductView from '@/views/ProductView.vue'
 import ListingStoresView from '@/views/ListingStoresView.vue'
-//import ListingProductsView from '@/views/ListingProductsView.vue'
+import ListingProductsView from '@/views/ListingProductsView.vue'
 import { Auth } from '@/auth'
 
 const router = createRouter({
@@ -50,20 +49,13 @@ const router = createRouter({
       name: 'listingStores',
       component: ListingStoresView,
       meta: { requiresAuth: true }
-    },
-    /*{
-      path: '/products',
-      name: 'products',
-      component: ProductView,
-      meta: { requiresAuth: true }
-    },
-    
+    },    
     {
       path: '/listingProducts',
       name: 'listingProducts',
       component: ListingProductsView,
       meta: { requiresAuth: true }
-    }*/
+    }
   ]
 })
 router.beforeEach((to, from, next) => {

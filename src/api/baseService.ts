@@ -16,7 +16,8 @@ abstract class BaseService {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        X_API_KEY: import.meta.env.VITE_X_API_KEY
       }
     })
     return response
