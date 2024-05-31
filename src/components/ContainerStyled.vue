@@ -19,5 +19,6 @@ div {
   align-items: center;
   gap: 10px;
   margin-top: 15px;;
+  justify-content: center;
 }
 </style>

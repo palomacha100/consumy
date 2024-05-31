@@ -49,7 +49,7 @@ const signOut = () => {
                 <a class="nav-link" href="#">Pedidos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Lojas</a>
+                <a class="nav-link" href="listingStores">Lojas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Estatísticas</a>
