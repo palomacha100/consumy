@@ -188,11 +188,19 @@ onMounted(() => {
 })
 
 const handleCreateProfile = () => {
-  Swal.fire("Dados salvos com sucesso");
+  Swal.fire({
+  text: 'Dados salvos com sucesso.',
+  confirmButtonText: 'ok',
+  confirmButtonColor: '#cc4b4e',
+})
 }
 
 const handleUpdateProfile = () => {
-  Swal.fire("Perfil atualizado com sucesso");
+  Swal.fire({
+  text: 'Perfil atualizado com sucesso.',
+  confirmButtonText: 'ok',
+  confirmButtonColor: '#cc4b4e',
+})
 }
 
 const handleEdit = () => {
