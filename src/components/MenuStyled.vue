@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ImageStyled from './ImageStyled.vue';
+import { Auth } from '../auth'
+import { useRouter } from 'vue-router';
+
+const auth = new Auth;
+const isLoggedIn = ref(auth.isLoggedIn())
+const currentUser = ref(auth.currentUser())
 
 const showNotificationDropdown = ref(false);
 const showAvatarDropdown = ref(false);
@@ -14,6 +20,17 @@ const toggleAvatarDropdown = () => {
   showAvatarDropdown.value = !showAvatarDropdown.value;
   showNotificationDropdown.value = false;
 };
+
+const route = useRouter()
+
+const signOut = () => {
+  auth.signOut(() => {
+    isLoggedIn.value = auth.isLoggedIn()
+    currentUser.value = auth.currentUser()
+    sessionStorage.removeItem('active');
+    route.push('/signIn')
+  })
+}
 </script>
 
 <template>
@@ -26,13 +43,13 @@ const toggleAvatarDropdown = () => {
           />
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Início</a>
+                <a class="nav-link" href="home">Início</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Pedidos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Produtos</a>
+                <a class="nav-link" href="#">Lojas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Estatísticas</a>
@@ -56,11 +73,12 @@ const toggleAvatarDropdown = () => {
             </a>
             <div class="dropdown" @click="toggleAvatarDropdown">
                 <a class="icons dropdown-toggle" href="#">
-                    <img class="avatar-image" src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="User image"/>
+                    <img class="avatar-image" src="../../images/mood.png" alt="User image"/>
                 </a>
                 <ul class="dropdown-menu" v-if="showAvatarDropdown">
-                    <li><a class="dropdown-item" href="#">Meu perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Sair</a></li>
+                    <li><a class="dropdown-item" href="profile">Meu perfil</a></li>
+                    <li><a class="dropdown-item" href="profile">Minha carteira</a></li>
+                    <li><a @click="signOut" class="dropdown-item" href="#">Sair</a></li>
                 </ul>
             </div>
         </div>
