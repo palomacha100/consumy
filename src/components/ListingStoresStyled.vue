@@ -66,7 +66,7 @@ const showProducts = (id: number) => {
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
       <TitleStyled title="Lojas" />
     </ContainerStyled>
-    <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-blue)'">
+    <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
         v-model="searchQuery"
         id="storeSearch"
@@ -146,7 +146,7 @@ td {
 
 th {
   cursor: pointer;
-  background-color: var(--light-blue);
+  background-color: var(--light-red);
   
 }
 

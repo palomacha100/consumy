@@ -114,7 +114,7 @@ const handleAddToCart = (product: Product) => {
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
       <TitleStyled title="Produtos" />
     </ContainerStyled>
-    <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-blue)'">
+    <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
         v-model="searchQuery"
         id="storeSearch"
