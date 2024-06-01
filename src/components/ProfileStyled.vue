@@ -213,7 +213,7 @@ const handleEdit = () => {
     <div class="main-container">
       <form>
         <ContainerStyled width="800px" height="4.5rem" backgroundColor="transparent">
-          <TitleStyled title="Edição de perfil" />
+          <TitleStyled className="title-styled" title="Edição de perfil" />
         </ContainerStyled>
           <InputStyled
             v-model="fullName"

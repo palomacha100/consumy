@@ -11,7 +11,7 @@ const cart = cartState.cart;
 const router = useRouter();
 
 const goBackToShopping = () => {
-  router.push('/listingProducts');
+  router.push('/listingStores');
 };
 
 const increaseQuantity = (product: any) => {
@@ -142,7 +142,7 @@ const finalCartPriceFormatted = computed(() => {
   <style scoped>
   .cart-container {
     width: 68.75rem;
-    margin: 50px auto;
+    margin: 30px auto;
   }
   
   .empty-cart {

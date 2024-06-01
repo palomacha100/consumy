@@ -64,7 +64,7 @@ const showProducts = (id: number) => {
 <template>
   <div class="table-container">
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
-      <TitleStyled title="Lojas" />
+      <TitleStyled className="title-styled" title="Lojas" />
     </ContainerStyled>
     <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
