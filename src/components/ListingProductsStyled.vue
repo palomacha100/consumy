@@ -112,7 +112,7 @@ const handleAddToCart = (product: Product) => {
 <template>
   <div class="table-container">
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
-      <TitleStyled title="Produtos" />
+      <TitleStyled className="title-styled" title="Produtos" />
     </ContainerStyled>
     <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
