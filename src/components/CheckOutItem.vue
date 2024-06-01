@@ -77,7 +77,9 @@ const placeOrder = () => {
       cart: cart,
       total: finalCartPriceFormatted.value
     });
-    router.push('/order-success'); 
+    cart.length = 0;
+    router.push('/order-success');
+
   } else {
     alert('Por favor, preencha todos os campos corretamente');
   }
