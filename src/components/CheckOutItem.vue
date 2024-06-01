@@ -164,15 +164,25 @@ const placeOrder = () => {
 }
 
 .delivery-address {
-  margin: 1rem 0;
+  margin: 1rem 0 0 0;
   display: flex;
   height: 110px;
+  border-bottom: 1px solid #ddd;
 }
 
-.payment-method, .order-review  {
-    margin: 1rem 0;
+.payment-method {
+    margin: 1rem 0 0 0;
   display: flex;
-  height: 130px;
+  height: 150px;
+}
+
+.order-review {
+    margin: 1rem 0 0 0;
+    min-height: 150px;
+}
+
+.payment-method {
+    border-bottom: 1px solid #ddd;
 }
 
 .order-review {
@@ -184,6 +194,7 @@ const placeOrder = () => {
   flex-direction: column;
   margin: 5px;
   height: 100px;
+  
 }
 
 .payment-title, .delivery-title {
@@ -205,7 +216,7 @@ label, input {
   display: flex;
   gap: 1rem;
   border-bottom: 1px solid #ddd;
-  padding: 1rem 0;
+  padding: 1rem 0 0 0;
   height: 150px;
 }
 
