@@ -52,11 +52,10 @@ div {
   font-size: 0.875rem;
 }
 
-.main-text {
+.big-text {
   font-size: 2rem;
-  color: var(--white);
+  color: var(--dark-gray);
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {

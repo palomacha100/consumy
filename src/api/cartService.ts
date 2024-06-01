@@ -40,7 +40,6 @@ export const addToCart = (product: Product) => {
   saveCartToLocalStorage(cartState.cart);
 };
 
-// Save cart to localStorage whenever it changes
 watch(() => cartState.cart, (newCart) => {
   saveCartToLocalStorage(newCart);
 }, { deep: true });
