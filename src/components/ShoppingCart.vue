@@ -68,12 +68,12 @@ const finalCartPriceFormatted = computed(() => {
           className="big-text" 
           width=" auto"
           height="2.5rem"
-          text="Seu carrinho de compras está vazio"/>
+          text="Seu carrinho de compras está vazio."/>
         <ButtonStyled @click="goBackToShopping" 
-          label="Voltar para as compras"
+          label="Voltar às compras"
           className="transparent-button-red-text "
-          width="10rem"
-          height="2.5rem"/>
+          width="15rem"
+          height="2.8rem"/>
       </div>
       <div v-else>
         <div class="cart-items">
@@ -81,7 +81,7 @@ const finalCartPriceFormatted = computed(() => {
             <img :src="product.image_url" alt="Product Image" class="cart-thumbnail" />
             <div class="cart-details">
               <TitleStyled :title="product.title" className="small-title"/>
-              <p class="cart-category">{{ product.category }}</p>
+              <p class="cart-info">{{ product.category }}</p>
               <p class="price">{{ product.price }}</p>
               <div class="quantity-container">
                 <ButtonStyled 
@@ -109,7 +109,7 @@ const finalCartPriceFormatted = computed(() => {
               </div>
               <ButtonStyled 
                 @click="removeFromCart(product)"
-                className="login-button"
+                className="transparent-button-red-text"
                 label="Remover"
                 width="5rem"
                 height="2rem"
@@ -118,10 +118,14 @@ const finalCartPriceFormatted = computed(() => {
           </div>
         </div>
         <div class="cart-summary">
-          <p class="price">Produtos: {{ totalCartPriceFormatted }}</p>
-          <p class="price">Taxa: {{ calculateTaxFormatted }}</p>
-          <p class="price">Frete: R$ 10,00</p>
-          <h2>Total do carrinho: {{ finalCartPriceFormatted }}</h2>
+          <p class="cart-info">Produtos: {{ totalCartPriceFormatted }}</p>
+          <p class="cart-info">Taxa: {{ calculateTaxFormatted }}</p>
+          <p class="cart-info">Frete: R$ 10,00</p>
+          <TextStyled 
+          :text="`Total: ${finalCartPriceFormatted}`" 
+          className="subtitle" 
+          height="2.5rem"
+          />
           <ButtonStyled 
             @click="proceedToPayment"
             className="login-button"
@@ -137,12 +141,16 @@ const finalCartPriceFormatted = computed(() => {
   
   <style scoped>
   .cart-container {
-    width: 80%;
-    margin: auto;
+    width: 68.75rem;
+    margin: 50px auto;
   }
   
   .empty-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
+    align-items: center;
     margin-top: 50px;
   }
   
@@ -163,9 +171,10 @@ const finalCartPriceFormatted = computed(() => {
     width: 100px;
     height: 100px;
     object-fit: cover;
+    border-radius: 5px;
   }
 
-  .cart-category, .price {
+  .cart-info, .price {
     font-size: 1rem;
     color: var(--dark-gray)
   }
@@ -190,8 +199,13 @@ const finalCartPriceFormatted = computed(() => {
   }
   
   .cart-summary {
+    display: flex;
+    flex-direction: column;
     margin-top: 2rem;
     text-align: right;
+  
+    align-items: end;
   }
+
   </style>
   

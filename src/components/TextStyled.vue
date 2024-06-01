@@ -61,5 +61,7 @@ div {
 .subtitle {
   color: var(--dark-gray);
   font-size: 1rem;
+  font-weight: 700;
+
 }
 </style>
