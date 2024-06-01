@@ -356,7 +356,7 @@ const handleEdit = () => {
     <div class="main-container">
       <div class="profile">
        
-          <TitleStyled :title="`${fullName}`" class="title-styled" />
+          <TitleStyled className="title-styled" :title="`${fullName}`" class="title-styled" />
           <TextStyled
             className="gray-text"
             width=" 800px"
