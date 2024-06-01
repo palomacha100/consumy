@@ -31,8 +31,8 @@ const removeFromCart = (product: any) => {
   }
 };
 
-const proceedToPayment = () => {
-  router.push('/payment');
+const checkout = () => {
+  router.push('/checkout');
 };
 
 const totalCartPrice = computed(() => {
@@ -127,9 +127,9 @@ const finalCartPriceFormatted = computed(() => {
           height="2.5rem"
           />
           <ButtonStyled 
-            @click="proceedToPayment"
+            @click="checkout"
             className="login-button"
-            label="Ir para pagamento"
+            label="Fechar pedido"
             width="10rem"
             height="2rem"
             />

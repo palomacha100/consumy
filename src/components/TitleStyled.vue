@@ -23,6 +23,11 @@ defineProps<{
   font-size: 2rem;
 }
 
+.medium-title {
+  color: var(--dark-gray);
+  font-size: 16px;
+}
+
 .small-title {
   color: var(--dark-gray);
   font-size: 10px;
