@@ -6,6 +6,7 @@
   import ContainerStyled from './ContainerStyled.vue'
   import { useRoute } from 'vue-router'
   import ButtonStyled from './ButtonStyled.vue'
+  import { addToCart } from '@/api/cartService';
 
   const route = useRoute()
   const filteredProducts = ref<any[]>([])
@@ -14,6 +15,7 @@
   const searchQuery = ref<string>('')
   const sortOrderName = ref<'asc' | 'desc'>('asc')
   const sortOrderPrice = ref<'asc' | 'desc'>('asc')
+
 
   interface Product {
   id: number
@@ -94,23 +96,25 @@ const increaseQuantity = (product: Product) => {
 }
 
 const decreaseQuantity = (product: Product) => {
-  if (product.quantity! > 1) {
+  if (product.quantity! >= 1) {
     product.quantity! -= 1
   }
 }
 
-const addToCart = (product: Product) => {
-  console.log(`Adicionado ao carrinho: ${product.title}, Quantidade: ${product.quantity}`)
-  // Implementar lógica de adicionar ao carrinho
-}
+const handleAddToCart = (product: Product) => {
+  addToCart(product);
+  console.log(`Adicionado ao carrinho: ${product.title}, Quantidade: ${product.quantity}`);
+  product.quantity = 0
+};
+
 </script>
 
 <template>
   <div class="table-container">
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
-      <TitleStyled title="Produtos" />
+      <TitleStyled className="title-styled" title="Produtos" />
     </ContainerStyled>
-    <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-blue)'">
+    <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
         v-model="searchQuery"
         id="storeSearch"
@@ -180,7 +184,8 @@ const addToCart = (product: Product) => {
               height="2.8rem"
               />
           </div>
-          <ButtonStyled @click="addToCart(product)"
+          <ButtonStyled 
+            @click="handleAddToCart(product)"
             className="login-button"
             label="Adicionar ao carrinho"
             width="14rem"

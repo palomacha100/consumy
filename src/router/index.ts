@@ -7,6 +7,8 @@ import WelcomeView from '@/views/WelcomeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import ListingStoresView from '@/views/ListingStoresView.vue'
 import ListingProductsView from '@/views/ListingProductsView.vue'
+import ShoppingCartView from '@/views/ShoppingCartView.vue'
+import CheckOutView from '@/views/CheckOutView.vue'
 import { Auth } from '@/auth'
 
 const router = createRouter({
@@ -54,6 +56,18 @@ const router = createRouter({
       path: '/listingProducts',
       name: 'listingProducts',
       component: ListingProductsView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/shoppingCart',
+      name: 'shoppingCart',
+      component: ShoppingCartView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/checkOut',
+      name: 'checkOut',
+      component: CheckOutView,
       meta: { requiresAuth: true }
     }
   ]

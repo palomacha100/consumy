@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import ImageStyled from './ImageStyled.vue';
 import { Auth } from '../auth'
 import { useRouter } from 'vue-router';
+import { totalItemsInCart } from '@/api/cartService';
 
 const auth = new Auth;
 const isLoggedIn = ref(auth.isLoggedIn())
@@ -31,6 +32,7 @@ const signOut = () => {
     route.push('/signIn')
   })
 }
+
 </script>
 
 <template>
@@ -67,10 +69,10 @@ const signOut = () => {
                     <li><a class="dropdown-item" href="#">Notificação 2</a></li>
                 </ul>
             </div>
-            <a class="icons" href="order">
-                <img src="../assets/shopping-cart.svg" alt="Shopping cart" height="24"/>
-                <span class="notification">1</span>
-            </a>
+            <a class="icons" href="shoppingCart">
+              <img src="../assets/shopping-cart.svg" alt="Shopping cart" height="24"/>
+              <span class="notification">{{ totalItemsInCart }}</span>
+        </a>
             <div class="dropdown" @click="toggleAvatarDropdown">
                 <a class="icons dropdown-toggle" href="#">
                     <img class="avatar-image" src="../../images/mood.png" alt="User image"/>

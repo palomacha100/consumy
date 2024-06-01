@@ -2,11 +2,12 @@
 import { defineProps } from 'vue'
 defineProps<{
   title: string
+  className: string
 }>()
 </script>
 
 <template>
-  <div class="title-styled">
+  <div :class="className">
     <h1>{{ title }}</h1>
   </div>
 </template>
@@ -20,5 +21,15 @@ defineProps<{
 .title-styled h1 {
   color: var(--red);
   font-size: 2rem;
+}
+
+.medium-title {
+  color: var(--dark-gray);
+  font-size: 16px;
+}
+
+.small-title {
+  color: var(--dark-gray);
+  font-size: 10px;
 }
 </style>
