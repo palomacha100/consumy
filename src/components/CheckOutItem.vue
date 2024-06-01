@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { cartState } from '@/api/cartService';
 import TitleStyled from './TitleStyled.vue';
 import TextStyled from './TextStyled.vue';
+import ButtonStyled from './ButtonStyled.vue';
 
 const cart = cartState.cart;
 const router = useRouter();
@@ -17,7 +18,7 @@ const city = ref('');
 const state = ref('');
 const cep = ref('');
 
-const paymentMethod = ref('');
+
 const cardNumber = ref('');
 const cardName = ref('');
 const expirationMonth = ref('');
@@ -64,15 +65,10 @@ const finalCartPriceFormatted = computed(() => {
 });
 
 const placeOrder = () => {
-  if (fullAddress.value && paymentMethod.value) {
-    if (paymentMethod.value === 'credit' && (!expirationMonth.value || !expirationYear.value)) {
-      alert('Por favor, preencha a data de expiração do cartão de crédito');
-      return;
-    }
-    
+  if (fullAddress.value && cardNumber.value && cardName.value && expirationMonth.value && expirationYear.value && cvv.value) {
     console.log('Pedido finalizado com sucesso!', {
       address: fullAddress.value,
-      paymentMethod: paymentMethod.value,
+ 
       cardNumber: cardNumber.value,
       cardName: cardName.value,
       expirationMonth: expirationMonth.value,
@@ -83,7 +79,7 @@ const placeOrder = () => {
     });
     router.push('/order-success'); 
   } else {
-    alert('Por favor, preencha todos os campos');
+    alert('Por favor, preencha todos os campos corretamente');
   }
 };
 </script>
@@ -148,8 +144,11 @@ const placeOrder = () => {
       <p>Taxa: {{ calculateTaxFormatted }}</p>
       <h3>Total: {{ finalCartPriceFormatted }}</h3>
     </div>
-
-    <button @click="placeOrder">Finalizar Pedido</button>
+    <div class="button-container">
+      <ButtonStyled className="login-button" @click="placeOrder" label="Finalizar pedido" class="login-button"
+        width="12rem"
+        height="2.8rem"/>
+    </div>
   </div>
 </template>
 
@@ -160,7 +159,6 @@ const placeOrder = () => {
   height: auto;
   display: flex;
   flex-direction: column;
- 
 }
 
 .delivery-address {
@@ -171,30 +169,29 @@ const placeOrder = () => {
 }
 
 .payment-method {
-    margin: 1rem 0 0 0;
+  margin: 1rem 0 0 0;
   display: flex;
   height: 150px;
 }
 
 .order-review {
-    margin: 1rem 0 0 0;
-    min-height: 150px;
+  margin: 1rem 0 0 0;
+  min-height: 150px;
 }
 
 .payment-method {
-    border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .order-review {
-    flex-direction: column;
+  flex-direction: column;
 }
 
-.delivery-address-info, .payment-options{
+.delivery-address-info, .payment-options {
   display: flex;
   flex-direction: column;
   margin: 5px;
   height: 100px;
-  
 }
 
 .payment-title, .delivery-title {
@@ -208,8 +205,8 @@ const placeOrder = () => {
 }
 
 label, input {
-    color: var(--dark-gray);
-    font-size: 0.875rem;
+  color: var(--dark-gray);
+  font-size: 0.875rem;
 }
 
 .order-item {
@@ -232,26 +229,22 @@ label, input {
 }
 
 .order-summary {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: right;
   margin-top: 1rem;
   height: 100px;
 }
 
-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
+.button-container {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
 }
 </style>
+
 
   
