@@ -9,6 +9,21 @@ class StoreService extends BaseService {
     const response = await this.getEntity('stores')
     if (response.ok) {
       this.success(response, onSuccess, 'getAll')
+    } else if (response.status === 401) {
+
+      const refresh_token = this.storage.get('refresh_token') || '[]';
+      const parseRefresh = refresh_token;
+      await this.auth.refreshTokens(parseRefresh);
+      const newResponse = await this
+        .getEntity
+        (
+          'stores'
+        );
+      if (newResponse.ok) {
+        this.success(newResponse, onSuccess, 'getAll');
+      } else {
+        this.failure(newResponse, onFailure)
+      }
     } else {
       this.failure(response, onFailure)
     }

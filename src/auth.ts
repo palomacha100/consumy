@@ -18,11 +18,12 @@ class Auth {
     response.json().then((json) => {
       this.storage.store('token', json.token)
       this.storage.store('email', json.email)
+      this.storage.store('refresh_token', json.refresh_token)
       onSuccess()
     })
   }
   failure(response: Response, onFailure: (error: string) => void) {
-    response.json().then((json) => {
+    response.json().then(() => {
       onFailure('Email já cadastrado')
     })
   }
@@ -71,6 +72,26 @@ class Auth {
       }
     })
   }
+
+  async refreshTokens(refresh: string) {
+    const response = await fetch(`${URL}/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': X_API_KEY
+      },
+      body: JSON.stringify({ refresh_token: refresh })
+    }); 
+
+    if (response.ok) {
+      const data = await response.json();
+      this.storage.store('email', data.email)
+      this.storage.store('token', data.token);
+      this.storage.store('refresh_token', data.refresh_token)
+    } else {
+      return null;
+    }
+  };
 
   async signUp(
     email: string,

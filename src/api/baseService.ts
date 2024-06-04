@@ -1,12 +1,16 @@
 import { createStorage, type SimpleStorage } from '@/utils/storage'
+import { Auth } from '@/auth';
+const X_API_KEY = import.meta.env.VITE_X_API_KEY
 
 abstract class BaseService {
   protected apiUrl: string
   storage: SimpleStorage
+  protected auth: Auth;
   constructor() {
     this.apiUrl = import.meta.env.VITE_APP_API_URL
     const persistent: boolean = this.whatIsMyStorage()
     this.storage = createStorage(persistent)
+    this.auth = new Auth(persistent);
   }
 
   async getEntity(path: string): Promise<Response> {
@@ -14,10 +18,11 @@ abstract class BaseService {
     const response = await fetch(`${this.apiUrl}/${path}`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        X_API_KEY: import.meta.env.VITE_X_API_KEY
+        'Authorization': `Bearer ${token}`,
+        X_API_KEY: X_API_KEY
+      
       }
     })
     return response

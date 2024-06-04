@@ -9,6 +9,19 @@ class ProductService extends BaseService {
     const response = await this.getEntity(`stores/${id}/products?page=${page}&locale=pt-BR`)
     if (response.ok) {
       this.success(response, onSuccess)
+    } else if (response.status === 401) {
+      console.log('token já expirou')
+      const refresh_token = this.storage.get('refresh_token') || '[]';
+      const parseRefresh = refresh_token;
+      await this.auth.refreshTokens(parseRefresh);
+      const newResponse = await this.getEntity
+        (`stores/${id}/products?page=${page}&locale=pt-BR`)
+      if (newResponse.ok) {
+        this.success(newResponse, onSuccess);
+        console.log('renovou o token')
+      } else {
+        this.failure(newResponse, onFailure)
+      }
     } else {
       this.failure(response, onFailure)
     }
