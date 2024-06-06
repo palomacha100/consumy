@@ -25,6 +25,7 @@
   price: string
   active: boolean
   quantity: number
+  thumbnail_url: string
 }
 
 const fetchProducts = async (storeId: number) => {
@@ -35,6 +36,7 @@ const fetchProducts = async (storeId: number) => {
     storeId,
     (data: any) => {
       products.value = data.result.products || []
+      console.log(data)
       if (products.value.length > 0) {
         products.value.forEach((product) => {
           product.active = true
@@ -43,8 +45,10 @@ const fetchProducts = async (storeId: number) => {
       }
       const newProduct = products.value.map((product) => ({
         ...product,
-        image_url: `${import.meta.env.VITE_APP_API_URL}${product.image_url}`
+        image_url: `${import.meta.env.VITE_APP_API_URL}${product.image_url}`,
+        thumbnail_url: `${import.meta.env.VITE_APP_API_URL}${product.thumbnail_url}`
       }))
+      console.log(newProduct)
       filteredProducts.value = newProduct
     },
     () => {
@@ -156,7 +160,7 @@ const handleAddToCart = (product: Product) => {
 
     <div class="cards-container">
       <div class="card" v-for="product in filteredProducts" :key="product.id">
-        <img :src="product.image_url" alt="Product Image" class="card-thumbnail" />
+        <img :src="product.thumbnail_url" alt="Product Image" class="card-thumbnail" />
         <div class="card-content">
           <h1>{{ product.title }}</h1>
           <p>{{ product.description }}</p>
