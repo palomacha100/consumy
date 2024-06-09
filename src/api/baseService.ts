@@ -70,6 +70,8 @@ abstract class BaseService {
     return this.storage.get(key)
   }
 
+  
+
   private whatIsMyStorage() {
     const transient = createStorage(false)
     if (transient.get('token') != undefined) {

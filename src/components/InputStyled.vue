@@ -93,8 +93,29 @@ span {
   height: 3rem;
 }
 
+.input-header {
+  display: flex;
+  justify-content: center;
+}
+.input-header input {
+  width: 55rem;
+  height: 2.5rem;
+  border-color: transparent;
+}
+
 .radio-container {
   display: flex;
   flex-direction: row;
 }
+
+.full-input {
+  width: 100%;
+  height: 5rem;
+}
+
+.full-input input {
+  height: 2.8rem;
+  border-color: transparent;
+}
+
 </style>

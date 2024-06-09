@@ -2,7 +2,6 @@
 import { ref, onMounted, computed } from 'vue'
 import { StoreService } from '../api/storeService'
 import TitleStyled from './TitleStyled.vue'
-import TextStyled from './TextStyled.vue'
 import InputStyled from './InputStyled.vue'
 import ContainerStyled from './ContainerStyled.vue'
 import { useRouter } from 'vue-router'

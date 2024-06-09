@@ -49,6 +49,22 @@ class Auth {
     andThen()
   }
 
+  async getUser(onSuccess: (user: any) => void, onFailure: () => void) {
+    const response = await fetch(`${URL}/show`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-API-KEY': X_API_KEY,
+        'Authorization': `Bearer ${this.getFallback('token')}`
+      }})
+    if (response.ok) {
+      const data = await response.json()
+      onSuccess(data)
+    } else {
+      onFailure()
+    }
+  }
+
   async signIn(email: string, password: string, onSuccess: () => void, onFailure: () => void) {
     const body = {
       login: {
@@ -93,6 +109,40 @@ class Auth {
     }
   };
 
+  async deleteUser(onSuccess: () => void, onFailure: () => void) {
+    console.log('aqui delete user')
+    const response = await fetch(`${URL}/destroy`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': X_API_KEY,
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${this.getFallback('token')}`
+  }})
+    if (response.ok) {
+      this.signOut(onSuccess)
+    } else {
+      onFailure()
+    }
+}
+
+async updateUser(data: any, onSuccess: () => void, onFailure: () => void) {
+  const response = await fetch(`${URL}/update_user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': X_API_KEY,
+      'Authorization': `Bearer ${this.getFallback('token')}`
+    },
+    body: JSON.stringify({user: data})
+  })
+  if (response.ok) {
+    onSuccess()
+  } else {
+    onFailure()
+  }
+}
+
   async signUp(
     email: string,
     password: string,
@@ -125,4 +175,6 @@ class Auth {
     })
   }
 }
+
+
 export { Auth }
