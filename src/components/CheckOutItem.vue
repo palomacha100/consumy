@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { cartState } from '@/api/cartService';
 import { OrderService } from '@/api/orderService';
 import TitleStyled from './TitleStyled.vue';
@@ -9,9 +8,8 @@ import ButtonStyled from './ButtonStyled.vue';
 import Swal from 'sweetalert2';
 
 const cart = cartState.cart;
-const order = new OrderService();
-const router = useRouter();
 
+const order = new OrderService();
 const fullName = ref('');
 const address = ref('');
 const numberAddress = ref('');
@@ -26,7 +24,6 @@ const cardNumber = ref('');
 const cardName = ref('');
 const expirationData = ref('');
 const cvv = ref('');
-const validCart = ref('');
 
 onMounted(() => {
   fullName.value = localStorage.getItem('fullName') || '';
@@ -91,8 +88,8 @@ const placeOrder = () => {
       title: 'Pedido realizado com sucesso!',
       text: 'Seu pedido foi realizado com sucesso!',
       icon: 'success',
-      confirmButtonText: 'Ok'
-    });
+      confirmButtonText: 'Ok',
+    })
   }, () => {
     console.error('Failed to place order');
   });

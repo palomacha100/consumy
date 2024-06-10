@@ -12,6 +12,7 @@ export interface Product {
 
 interface CartState {
   cart: Product[];
+  totalItemsInCart?: number;
 }
 
 const loadCartFromLocalStorage = (): Product[] => {

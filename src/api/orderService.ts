@@ -1,7 +1,5 @@
-import { Auth } from '@/auth';
+import { cartState } from './cartService';
 import { BaseService } from './baseService';
-const X_API_KEY = import.meta.env.VITE_X_API_KEY
-
 
 class OrderService extends BaseService {
   constructor() {
@@ -13,13 +11,18 @@ class OrderService extends BaseService {
       const data = await response.json()
       const paymentResponse = await 
       this.put(`buyers/orders/${data.order.id}/pay`, payment)
-      if (paymentResponse.ok) {
-        onSuccess()
+      if (paymentResponse.ok) {     
+          onSuccess();
+          cartState.cart = [];
+          cartState.totalItemsInCart = 0;
+        } else {
+          onFailure();
+        }
       } else {
         onFailure()
       }
     }
   }
-}
+
 
 export { OrderService }
