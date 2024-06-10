@@ -2,11 +2,14 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { cartState } from '@/api/cartService';
+import { OrderService } from '@/api/orderService';
 import TitleStyled from './TitleStyled.vue';
 import TextStyled from './TextStyled.vue';
 import ButtonStyled from './ButtonStyled.vue';
+import Swal from 'sweetalert2';
 
 const cart = cartState.cart;
+const order = new OrderService();
 const router = useRouter();
 
 const fullName = ref('');
@@ -21,9 +24,9 @@ const cep = ref('');
 
 const cardNumber = ref('');
 const cardName = ref('');
-const expirationMonth = ref('');
-const expirationYear = ref('');
+const expirationData = ref('');
 const cvv = ref('');
+const validCart = ref('');
 
 onMounted(() => {
   fullName.value = localStorage.getItem('fullName') || '';
@@ -65,25 +68,36 @@ const finalCartPriceFormatted = computed(() => {
 });
 
 const placeOrder = () => {
-  if (fullAddress.value && cardNumber.value && cardName.value && expirationMonth.value && expirationYear.value && cvv.value) {
-    console.log('Pedido finalizado com sucesso!', {
-      address: fullAddress.value,
- 
-      cardNumber: cardNumber.value,
-      cardName: cardName.value,
-      expirationMonth: expirationMonth.value,
-      expirationYear: expirationYear.value,
-      cvv: cvv.value,
-      cart: cart,
-      total: finalCartPriceFormatted.value
-    });
-    cart.length = 0;
-    router.push('/order-success');
-
-  } else {
-    alert('Por favor, preencha todos os campos corretamente');
+  const orderItem = {
+    order: {
+      store_id: cart[0].store_id,
+      order_items_attributes: cart.map(product => ({
+        product_id: product.id,
+        quantity: product.quantity,
+        price: product.price,
+      })),
+    }
   }
+  const paymentData = {
+    payment: {
+      number: cardNumber.value,
+      cvv: cvv.value,
+      value: finalCartPriceFormatted.value,
+      valid: expirationData.value
+    }
+  }
+  order.createOrder(orderItem, paymentData, () => {
+    Swal.fire({
+      title: 'Pedido realizado com sucesso!',
+      text: 'Seu pedido foi realizado com sucesso!',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    });
+  }, () => {
+    console.error('Failed to place order');
+  });
 };
+
 </script>
 
 <template>
@@ -116,12 +130,8 @@ const placeOrder = () => {
           <input type="text" v-model="cardName" />
         </label>
         <label>
-          Mês de Expiração
-          <input type="text" v-model="expirationMonth" placeholder="MM" maxlength="2"/>
-        </label>
-        <label>
-          Ano de Expiração
-          <input type="text" v-model="expirationYear" placeholder="AAAA" maxlength="4"/>
+          Data de Expiração
+          <input type="data" v-model="expirationData" placeholder="YYYY-MM-DD"/>
         </label>
         <label>
           Código de segurança (CVV)

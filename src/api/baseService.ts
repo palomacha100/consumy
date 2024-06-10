@@ -12,6 +12,7 @@ abstract class BaseService {
     this.storage = createStorage(persistent)
     this.auth = new Auth(persistent);
   }
+  
 
   async getEntity(path: string): Promise<Response> {
     const token = this.getFallback('token')
@@ -21,7 +22,7 @@ abstract class BaseService {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
-        X_API_KEY: X_API_KEY
+        'X_API_KEY': X_API_KEY
       
       }
     })
@@ -34,7 +35,9 @@ abstract class BaseService {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'X_API_KEY': X_API_KEY
       },
       body: data
     })
@@ -47,12 +50,33 @@ abstract class BaseService {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'X_API_KEY': X_API_KEY
       },
       body: data
     })
     return response
   }
+
+  protected async put(path: string, body: any) {
+    const token = this.getFallback('token');
+    const response = await fetch(`${this.apiUrl}/${path}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'X_API_KEY': X_API_KEY
+        },
+        body: JSON.stringify(body)
+      }
+    );
+    return response;
+  }
+
+
   async delete(id: number, path: string): Promise<Response> {
     const token = this.getFallback('token')
     const response = await fetch(`${this.apiUrl}/${path}/${id}`, {

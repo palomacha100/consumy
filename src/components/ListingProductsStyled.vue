@@ -26,6 +26,7 @@
   active: boolean
   quantity: number
   thumbnail_url: string
+  store_id: number
 }
 
 const fetchProducts = async (storeId: number) => {
@@ -106,7 +107,10 @@ const decreaseQuantity = (product: Product) => {
 }
 
 const handleAddToCart = (product: Product) => {
-  addToCart(product);
+  const object = { ...product,
+    store_id: Number(route.query.id)
+  }
+  addToCart(object);
   console.log(`Adicionado ao carrinho: ${product.title}, Quantidade: ${product.quantity}`);
   product.quantity = 0
 };

@@ -7,6 +7,7 @@ export interface Product {
   image_url: string;
   price: string;
   quantity: number;
+  store_id: number;
 }
 
 interface CartState {
