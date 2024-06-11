@@ -5,8 +5,8 @@ const props = defineProps<{
   label: string
   className: string
   isDisabled?: boolean
-  width: string
-  height: string
+  width?: string
+  height?: string
 }>()
 
 const emit = defineEmits(['click'])
@@ -48,6 +48,9 @@ button {
   background-color: transparent;
   color: var(--red);
   border: none;
+  width: auto;
+  height: 2.8rem;
+  text-align: start;
 }
 
 .disable-button {

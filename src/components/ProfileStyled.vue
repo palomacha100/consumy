@@ -291,8 +291,6 @@ const handleEdit = () => {
               <ButtonStyled
                 className="transparent-button-red-text"
                 label="Pesquisar CEP"
-                width="8rem"
-                height="2.8rem"
                 @click="addressSearch"
               />
             </div>
@@ -352,8 +350,6 @@ const handleEdit = () => {
         </div>
         <ButtonStyled className="transparent-button-red-text"
               label="Excluir minha conta"
-              width="12rem"
-              height="2.8rem"
               @click.prevent="deleteAccount"/>
         <div class="button-container">
           <ButtonStyled
@@ -374,26 +370,18 @@ const handleEdit = () => {
           <TitleStyled className="title-styled" :title="`${name}`" class="title-styled" />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
             :text="`CPF: ${cpf}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
             :text="`Telefone: ${phonenumber}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
             :text="`Endereço: ${address}, ${numberaddress}, ${complementaddress}, ${neighborhood}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
             :text="`CEP: ${cep} - ${city} - ${state}`"
           />
           <div class="button-container">

@@ -19,7 +19,6 @@ div {
   display: flex;
   justify-content: start;
   align-items: center;
-  height: 100vh;
 }
 .text-container {
   display: flex;
@@ -29,6 +28,7 @@ div {
 .gray-text p {
   color: var(--dark-gray);
   font-size: 0.875rem;
+  height: 2rem;
 }
 .red-text p {
   color: var(--red);
