@@ -12,13 +12,12 @@ const cart = cartState.cart;
 const order = new OrderService();
 const fullName = ref('');
 const address = ref('');
-const numberAddress = ref('');
-const complementAddress = ref('');
+const numberaddress = ref('');
+const complementaddress = ref('');
 const neighborhood = ref('');
 const city = ref('');
 const state = ref('');
 const cep = ref('');
-
 
 const cardNumber = ref('');
 const cardName = ref('');
@@ -26,10 +25,10 @@ const expirationData = ref('');
 const cvv = ref('');
 
 onMounted(() => {
-  fullName.value = localStorage.getItem('fullName') || '';
+  fullName.value = localStorage.getItem('name') || '';
   address.value = localStorage.getItem('address') || '';
-  numberAddress.value = localStorage.getItem('numberAddress') || '';
-  complementAddress.value = localStorage.getItem('complementAddress') || '';
+  numberaddress.value = localStorage.getItem('numberaddress') || '';
+  complementaddress.value = localStorage.getItem('complementaddress') || '';
   neighborhood.value = localStorage.getItem('neighborhood') || '';
   city.value = localStorage.getItem('city') || '';
   state.value = localStorage.getItem('state') || '';
@@ -45,19 +44,6 @@ const totalCartPrice = computed(() => {
 
 const totalCartPriceFormatted = computed(() => {
   return totalCartPrice.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-});
-
-const calculateTax = computed(() => {
-  return totalCartPrice.value * 0.02;
-});
-
-const calculateTaxFormatted = computed(() => {
-  return calculateTax.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-});
-
-const finalCartPriceFormatted = computed(() => {
-  const finalPrice = totalCartPrice.value + calculateTax.value;
-  return finalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 });
 
 const placeOrder = () => {
@@ -76,7 +62,7 @@ const placeOrder = () => {
     payment: {
       number: cardNumber.value,
       cvv: cvv.value,
-      value: finalCartPriceFormatted.value,
+      value: totalCartPriceFormatted.value,
       valid: expirationData.value
     }
   }
@@ -104,7 +90,7 @@ const placeOrder = () => {
       </div>
       <div class="delivery-address-info">
         <TextStyled className="gray-text" height="1.5rem" :text="fullName"/>
-        <TextStyled className="gray-text" height="1.5rem" :text="`${address}, ${numberAddress} ${complementAddress}`"/>
+        <TextStyled className="gray-text" height="1.5rem" :text="`${address}, ${numberaddress} ${complementaddress}`"/>
         <TextStyled className="gray-text" height="1.5rem" :text="neighborhood"/>
         <TextStyled className="gray-text" height="1.5rem" :text="`${city}, ${state}, ${cep}`"/>
       </div>
@@ -137,7 +123,7 @@ const placeOrder = () => {
     <section class="order-review">
       <TitleStyled className="medium-title" title="Revisão do pedido"/>
       <div class="order-item" v-for="product in cart" :key="product.id">
-        <img :src="product.image_url" alt="Product Image" class="order-thumbnail" />
+        <img :src="product.thumbnail_url" alt="Product Image" class="order-thumbnail" />
         <div class="order-details">
           <h3>{{ product.title }}</h3>
           <p>Quantidade: {{ product.quantity }}</p>
@@ -146,9 +132,7 @@ const placeOrder = () => {
       </div>
     </section>
     <div class="order-summary">
-      <p>Subtotal: {{ totalCartPriceFormatted }}</p>
-      <p>Taxa: {{ calculateTaxFormatted }}</p>
-      <h3>Total: {{ finalCartPriceFormatted }}</h3>
+      <h3>Total: {{ totalCartPriceFormatted }}</h3>
     </div>
     <div class="button-container">
       <ButtonStyled className="login-button" @click="placeOrder" label="Finalizar pedido" class="login-button"
@@ -198,6 +182,7 @@ const placeOrder = () => {
   flex-direction: column;
   margin: 5px;
   height: 100px;
+  padding: 5px 0;
 }
 
 .payment-title, .delivery-title {
@@ -208,11 +193,13 @@ const placeOrder = () => {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 30rem;
 }
 
 label, input {
   color: var(--dark-gray);
   font-size: 0.875rem;
+  width: 15rem;
 }
 
 .order-item {
