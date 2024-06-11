@@ -36,10 +36,6 @@ onMounted(() => {
   cep.value = localStorage.getItem('cep') || '';
 });
 
-const fullAddress = computed(() => {
-  return `${address.value}, ${numberAddress.value} ${complementAddress.value}, ${neighborhood.value}, ${city.value} - ${state.value}, CEP: ${cep.value}`;
-});
-
 const totalCartPrice = computed(() => {
   return cart.reduce((total, product) => {
     const price = parseFloat(product.price.replace('R$', '').replace(/\./g, '').replace(',', '.'));
@@ -65,13 +61,14 @@ const finalCartPriceFormatted = computed(() => {
 });
 
 const placeOrder = () => {
+  console.log(cart[0])
   const orderItem = {
     order: {
       store_id: cart[0].store_id,
       order_items_attributes: cart.map(product => ({
         product_id: product.id,
-        quantity: product.quantity,
-        price: product.price,
+        amount: product.quantity,
+        price: product.price.replace('R$', '').replace(/\./g, '').replace(',', '.')
       })),
     }
   }
