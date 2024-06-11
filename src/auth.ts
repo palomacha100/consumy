@@ -127,18 +127,22 @@ class Auth {
 }
 
 async updateUser(data: any, onSuccess: () => void, onFailure: () => void) {
+  console.log('aqui update user')
   const response = await fetch(`${URL}/update_user`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'X-API-KEY': X_API_KEY,
       'Authorization': `Bearer ${this.getFallback('token')}`
     },
     body: JSON.stringify({user: data})
   })
   if (response.ok) {
+    console.log('aqui update user ok')
     onSuccess()
   } else {
+    console.log('aqui update user erro')
     onFailure()
   }
 }

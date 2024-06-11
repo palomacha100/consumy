@@ -98,20 +98,6 @@ const handlePhoneInput = (event: InputEvent) => {
   phonenumber.value = newValue
 }
 
-const canCompleteProfile = () => {
-  return (
-    name.value !== '' &&
-    cpf.value !== undefined &&
-    phonenumber.value !== undefined &&
-    city.value !== '' &&
-    cep.value !== undefined &&
-    state.value !== '' &&
-    neighborhood.value !== '' &&
-    address.value !== '' &&
-    numberaddress.value !== undefined
-  )
-}
-
 const addressSearch = (event: Event) => {
   event.preventDefault()
   fetch(`https://viacep.com.br/ws/${cep.value}/json/`)
@@ -127,7 +113,11 @@ const addressSearch = (event: Event) => {
         localStorage.setItem('city', city.value)
         localStorage.setItem('address', address.value)
       } else {
-        console.error('CEP não encontrado.'), () => Swal.fire('CEP não encontrado')
+        Swal.fire({
+          text: 'CEP não encontrado',
+          icon: 'error',
+          confirmButtonColor: '#cc4b4e'
+      })
       }
     })
     .catch((error) => {
@@ -207,15 +197,16 @@ const handleCreateProfile = () => {
       city: city.value,
       neighborhood: neighborhood.value,
       address: address.value,
-      numberAddress: numberaddress.value,
-      complementAddress: complementaddress.value,
+      numberaddress: numberaddress.value,
+      complementaddress: complementaddress.value,
     },
     () => {
       Swal.fire({
         text: 'Dados salvos com sucesso.',
         confirmButtonText: 'ok',
         confirmButtonColor: '#cc4b4e',
-      })
+      }),
+      isEditing.value = false
     },
     () => {
       Swal.fire({
@@ -250,7 +241,7 @@ const handleEdit = () => {
 
 </script>
 <template>
-  <template v-if="isStoreExists || isEditing">
+  <template v-if="!isStoreExists || isEditing">
     <div class="main-container">
       <form>
         <ContainerStyled width="800px" height="4.5rem" backgroundColor="transparent">
@@ -366,7 +357,7 @@ const handleEdit = () => {
               @click.prevent="deleteAccount"/>
         <div class="button-container">
           <ButtonStyled
-            @click.prevent="isEditing ? handleUpdateProfile() : handleCreateProfile()"
+            @click.prevent="handleCreateProfile()"
             type="submit"
             className="login-button"
             :label="isEditing ? 'Atualizar' : 'Enviar'"
@@ -380,7 +371,6 @@ const handleEdit = () => {
   <template v-else>
     <div class="main-container">
       <div class="profile">
-       
           <TitleStyled className="title-styled" :title="`${name}`" class="title-styled" />
           <TextStyled
             className="gray-text"
