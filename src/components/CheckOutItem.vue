@@ -161,16 +161,13 @@ const placeOrder = () => {
 .payment-method {
   margin: 1rem 0 0 0;
   display: flex;
-  height: 150px;
+  height: 200px;
+  border-bottom: 1px solid #ddd;
 }
 
 .order-review {
   margin: 1rem 0 0 0;
   min-height: 150px;
-}
-
-.payment-method {
-  border-bottom: 1px solid #ddd;
 }
 
 .order-review {
@@ -192,7 +189,6 @@ const placeOrder = () => {
 .payment-options {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   width: 30rem;
 }
 
@@ -206,8 +202,8 @@ label, input {
   display: flex;
   gap: 1rem;
   border-bottom: 1px solid #ddd;
-  padding: 1rem 0 0 0;
-  height: 150px;
+  padding: 0.5rem 0 0.5rem 0;
+  height: 120px;
 }
 
 .order-thumbnail {

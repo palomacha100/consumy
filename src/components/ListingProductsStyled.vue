@@ -40,7 +40,6 @@ const fetchProducts = async (storeId: number) => {
     storeId,
     (data: any) => {
       products.value = data.result.products || []
-      console.log(data)
       if (products.value.length > 0) {
         products.value.forEach((product) => {
           product.active = true
@@ -52,7 +51,6 @@ const fetchProducts = async (storeId: number) => {
         image_url: `${import.meta.env.VITE_APP_API_URL}${product.image_url}`,
         thumbnail_url: `${import.meta.env.VITE_APP_API_URL}${product.thumbnail_url}`
       }))
-      console.log(newProduct)
       filteredProducts.value = newProduct
     },
     () => {
@@ -62,11 +60,10 @@ const fetchProducts = async (storeId: number) => {
 }
 
 const fetchStoreName = async (storeId: number) => {
-  console.log('nome da loja')
     if (!storeId) {
       return
     }
-    await storeService.getStoresById(storeId, // Certifique-se de que estamos chamando o método correto
+    await storeService.getStoresById(storeId,
       response => {
         storeName.value = response.name
       },
