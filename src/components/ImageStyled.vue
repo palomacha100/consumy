@@ -30,4 +30,13 @@ defineProps<{
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 780px) {
+    .image-styled-container img {
+  width: 100%;
+  max-width: 3rem;
+  height: auto;
+  object-fit: contain;
+}
+}
 </style>
