@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue'
   import { ProductService } from '@/api/productService'
+  import { StoreService } from '@/api/storeService'
   import TitleStyled from './TitleStyled.vue'
   import InputStyled from './InputStyled.vue'
   import ContainerStyled from './ContainerStyled.vue'
@@ -11,10 +12,12 @@
   const route = useRoute()
   const filteredProducts = ref<any[]>([])
   const productService = new ProductService()
+  const storeService = new StoreService()
   const products = ref<Product[]>([])
   const searchQuery = ref<string>('')
   const sortOrderName = ref<'asc' | 'desc'>('asc')
   const sortOrderPrice = ref<'asc' | 'desc'>('asc')
+  const storeName = ref<string>('')
 
 
   interface Product {
@@ -58,6 +61,20 @@ const fetchProducts = async (storeId: number) => {
   )
 }
 
+const fetchStoreName = async (storeId: number) => {
+  console.log('nome da loja')
+    if (!storeId) {
+      return
+    }
+    await storeService.getStoresById(storeId, // Certifique-se de que estamos chamando o método correto
+      response => {
+        storeName.value = response.name
+      },
+      () => {
+        console.error('Failed to fetch store')
+      })
+  }
+
 const sortByName = () => {
   if (sortOrderName.value === 'asc') {
     filteredProducts.value.sort((a, b) => a.title.localeCompare(b.title))
@@ -83,7 +100,9 @@ const sortByPrice = () => {
 }
 
 onMounted(() => {
-    fetchProducts(Number(route.query.id))
+  const storeId = Number(route.query.id)
+  fetchProducts(Number(route.query.id))
+  fetchStoreName(storeId)
 })
 
 const handleFilter = () => {
@@ -120,7 +139,7 @@ const handleAddToCart = (product: Product) => {
 <template>
   <div class="table-container">
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
-      <TitleStyled className="title-styled" title="Produtos" />
+      <TitleStyled className="title-styled" :title="`Produtos de ${storeName}`" />
     </ContainerStyled>
     <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
