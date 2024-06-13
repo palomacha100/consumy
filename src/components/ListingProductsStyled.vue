@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue'
   import { ProductService } from '@/api/productService'
+  import { StoreService } from '@/api/storeService'
   import TitleStyled from './TitleStyled.vue'
   import InputStyled from './InputStyled.vue'
   import ContainerStyled from './ContainerStyled.vue'
@@ -11,10 +12,12 @@
   const route = useRoute()
   const filteredProducts = ref<any[]>([])
   const productService = new ProductService()
+  const storeService = new StoreService()
   const products = ref<Product[]>([])
   const searchQuery = ref<string>('')
   const sortOrderName = ref<'asc' | 'desc'>('asc')
   const sortOrderPrice = ref<'asc' | 'desc'>('asc')
+  const storeName = ref<string>('')
 
 
   interface Product {
@@ -25,6 +28,8 @@
   price: string
   active: boolean
   quantity: number
+  thumbnail_url: string
+  store_id: number
 }
 
 const fetchProducts = async (storeId: number) => {
@@ -43,7 +48,8 @@ const fetchProducts = async (storeId: number) => {
       }
       const newProduct = products.value.map((product) => ({
         ...product,
-        image_url: `${import.meta.env.VITE_APP_API_URL}${product.image_url}`
+        image_url: `${import.meta.env.VITE_APP_API_URL}${product.image_url}`,
+        thumbnail_url: `${import.meta.env.VITE_APP_API_URL}${product.thumbnail_url}`
       }))
       filteredProducts.value = newProduct
     },
@@ -52,6 +58,19 @@ const fetchProducts = async (storeId: number) => {
     }
   )
 }
+
+const fetchStoreName = async (storeId: number) => {
+    if (!storeId) {
+      return
+    }
+    await storeService.getStoresById(storeId,
+      response => {
+        storeName.value = response.name
+      },
+      () => {
+        console.error('Failed to fetch store')
+      })
+  }
 
 const sortByName = () => {
   if (sortOrderName.value === 'asc') {
@@ -78,7 +97,9 @@ const sortByPrice = () => {
 }
 
 onMounted(() => {
-    fetchProducts(Number(route.query.id))
+  const storeId = Number(route.query.id)
+  fetchProducts(Number(route.query.id))
+  fetchStoreName(storeId)
 })
 
 const handleFilter = () => {
@@ -102,7 +123,10 @@ const decreaseQuantity = (product: Product) => {
 }
 
 const handleAddToCart = (product: Product) => {
-  addToCart(product);
+  const object = { ...product,
+    store_id: Number(route.query.id)
+  }
+  addToCart(object);
   console.log(`Adicionado ao carrinho: ${product.title}, Quantidade: ${product.quantity}`);
   product.quantity = 0
 };
@@ -112,7 +136,7 @@ const handleAddToCart = (product: Product) => {
 <template>
   <div class="table-container">
     <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
-      <TitleStyled className="title-styled" title="Produtos" />
+      <TitleStyled className="title-styled" :title="`Produtos de ${storeName}`" />
     </ContainerStyled>
     <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
       <InputStyled
@@ -156,7 +180,7 @@ const handleAddToCart = (product: Product) => {
 
     <div class="cards-container">
       <div class="card" v-for="product in filteredProducts" :key="product.id">
-        <img :src="product.image_url" alt="Product Image" class="card-thumbnail" />
+        <img :src="product.thumbnail_url" alt="Product Image" class="card-thumbnail" />
         <div class="card-content">
           <h1>{{ product.title }}</h1>
           <p>{{ product.description }}</p>

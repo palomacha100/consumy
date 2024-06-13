@@ -5,12 +5,15 @@ export interface Product {
   title: string;
   category: string;
   image_url: string;
+  thumbnail_url: string;
   price: string;
   quantity: number;
+  store_id: number;
 }
 
 interface CartState {
   cart: Product[];
+  totalItemsInCart?: number;
 }
 
 const loadCartFromLocalStorage = (): Product[] => {

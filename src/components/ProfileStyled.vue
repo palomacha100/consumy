@@ -5,29 +5,32 @@ import InputStyled from '../components/InputStyled.vue'
 import TextStyled from '../components/TextStyled.vue'
 import TitleStyled from '../components/TitleStyled.vue'
 import Swal from 'sweetalert2'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import ContainerStyled from '../components/ContainerStyled.vue'
+import { Auth } from '@/auth'
 
-const fullName = defineModel<string>('fullName', { default: '' })
+const name = defineModel<string>('name', { default: '' })
 const cpf = defineModel<string>('cpf', { default: '' })
-const phoneNumber = defineModel<string>('phoneNumber')
+const phonenumber = defineModel<string>('phoneNumber')
 const city = defineModel<string>('city', { default: '' })
 const cep = defineModel<string>('cep')
 const state = defineModel<string>('state', { default: '' })
 const neighborhood = defineModel<string>('neighborhood', { default: '' })
 const address = defineModel<string>('address', { default: '' })
-const numberAddress = defineModel<string>('numberAddress')
-const complementAddress = defineModel<string>('complementAddress', { default: '' })
+const numberaddress = defineModel<string>('numberAddress')
+const complementaddress = defineModel<string>('complementAddress', { default: '' })
 const isStoreExists = ref(false)
 const isEditing = ref(false)
 const route = useRoute()
+const router = useRouter()
+const auth = new Auth()
 
 const errors = reactive({
-  fullName: '',
+  name: '',
   cpf: '',
-  phoneNumber: '',
+  phonenumber: '',
   cep: '',
-  numberAddress: ''
+  numberaddress: ''
 })
 
 const validateField = (
@@ -47,9 +50,9 @@ const validateField = (
 }
 
 const handleFullName = (event: Event) => {
-  fullName.value = (event.target as HTMLInputElement).value
-  errors.fullName = validateField(fullName.value, 3, undefined, 'nome')
-  localStorage.setItem('fullName', (event.target as HTMLInputElement).value)
+  name.value = (event.target as HTMLInputElement).value
+  errors.name = validateField(name.value, 3, undefined, 'nome')
+  localStorage.setItem('name', (event.target as HTMLInputElement).value)
 }
 
 const handleCpf = (event: Event) => {
@@ -59,9 +62,9 @@ const handleCpf = (event: Event) => {
 }
 
 const handlePhoneNumber = (event: Event) => {
-  errors.phoneNumber = validateField(phoneNumber.value, undefined, [10, 11], 'telefone')
-  phoneNumber.value = (event.target as HTMLInputElement).value
-  localStorage.setItem('phoneNumber', (event.target as HTMLInputElement).value)
+  errors.phonenumber = validateField(phonenumber.value, undefined, [10, 11], 'telefone')
+  phonenumber.value = (event.target as HTMLInputElement).value
+  localStorage.setItem('phonenumber', (event.target as HTMLInputElement).value)
 }
 
 const handleCep = (event: Event) => {
@@ -71,14 +74,14 @@ const handleCep = (event: Event) => {
 }
 
 const handleNumberAddress = (event: Event) => {
-  errors.numberAddress = validateField(numberAddress.value, 1, undefined, 'numero')
-  numberAddress.value = (event.target as HTMLInputElement).value
-  localStorage.setItem('numberAddress', (event.target as HTMLInputElement).value)
+  errors.numberaddress = validateField(numberaddress.value, 1, undefined, 'numero')
+  numberaddress.value = (event.target as HTMLInputElement).value
+  localStorage.setItem('numberaddress', (event.target as HTMLInputElement).value)
 }
 
 const handleComplementAddress = (event: Event) => {
-  complementAddress.value = (event.target as HTMLInputElement).value
-  localStorage.setItem('complementAddress', (event.target as HTMLInputElement).value)
+  complementaddress.value = (event.target as HTMLInputElement).value
+  localStorage.setItem('complementaddress', (event.target as HTMLInputElement).value)
 }
 
 const handleCpfInput = (event: InputEvent) => {
@@ -92,21 +95,7 @@ const handlePhoneInput = (event: InputEvent) => {
   const input = event.target as HTMLInputElement
   const newValue = input.value.replace(/\D/g, '')
   input.value = newValue
-  phoneNumber.value = newValue
-}
-
-const canCompleteProfile = () => {
-  return (
-    fullName.value !== '' &&
-    cpf.value !== undefined &&
-    phoneNumber.value !== undefined &&
-    city.value !== '' &&
-    cep.value !== undefined &&
-    state.value !== '' &&
-    neighborhood.value !== '' &&
-    address.value !== '' &&
-    numberAddress.value !== undefined
-  )
+  phonenumber.value = newValue
 }
 
 const addressSearch = (event: Event) => {
@@ -124,7 +113,11 @@ const addressSearch = (event: Event) => {
         localStorage.setItem('city', city.value)
         localStorage.setItem('address', address.value)
       } else {
-        console.error('CEP não encontrado.'), () => Swal.fire('CEP não encontrado')
+        Swal.fire({
+          text: 'CEP não encontrado',
+          icon: 'error',
+          confirmButtonColor: '#cc4b4e'
+      })
       }
     })
     .catch((error) => {
@@ -133,38 +126,44 @@ const addressSearch = (event: Event) => {
 }
 
 const getModelByName = {
-  fullName,
+  name,
   cpf,
-  phoneNumber,
+  phonenumber,
   cep,
   state,
   city,
   neighborhood,
   address,
-  numberAddress,
-  complementAddress,
+  numberaddress,
+  complementaddress,
 }
 
 onMounted(() => {
   const formData = [
-    'fullName',
+    'name',
     'cpf',
-    'phoneNumber',
+    'phonenumber',
     'cep',
     'state',
     'city',
     'neighborhood',
     'address',
-    'numberAddress',
-    'complementAddress',
+    'numberaddress',
+    'complementaddress',
   ]
-  formData.forEach((field) => {
-    const storeData = localStorage.getItem(field) || ''
-    const storeSeller = storeData ? storeData : null
-    if (storeSeller !== null) {
-      getModelByName[field as keyof typeof getModelByName].value = storeSeller
-    }
-  })
+  auth.getUser((user) => {
+    formData.forEach((field) => {
+      getModelByName[field].value = user[field] || ''
+
+    })
+  },
+    () => {
+      Swal.fire({
+        text: 'Erro ao buscar dados do usuário.',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#cc4b4e',
+      })
+    });
     
   if (!address.value && !isStoreExists.value) {
     isStoreExists.value = true
@@ -174,34 +173,67 @@ onMounted(() => {
   }
   if (route.query.isNewProduct === 'true') {
     isEditing.value = true
-    fullName.value = ''
+    name.value = ''
     cpf.value = ''
-    phoneNumber.value = ''
+    phonenumber.value = ''
     city.value = ''
     cep.value = ''
     state.value = ''
     neighborhood.value = ''
     address.value = ''
-    numberAddress.value = ''
-    complementAddress.value = ''
+    numberaddress.value = ''
+    complementaddress.value = ''
   }
 })
 
 const handleCreateProfile = () => {
-  Swal.fire({
-  text: 'Dados salvos com sucesso.',
-  confirmButtonText: 'ok',
-  confirmButtonColor: '#cc4b4e',
-})
+  auth.updateUser(
+    {
+      name: name.value,
+      cpf: cpf.value,
+      phonenumber: phonenumber.value,
+      cep: cep.value,
+      state: state.value,
+      city: city.value,
+      neighborhood: neighborhood.value,
+      address: address.value,
+      numberaddress: numberaddress.value,
+      complementaddress: complementaddress.value,
+    },
+    () => {
+      Swal.fire({
+        text: 'Dados salvos com sucesso.',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#cc4b4e',
+      }),
+      isEditing.value = false
+    },
+    () => {
+      Swal.fire({
+        text: 'Erro ao salvar dados.',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#cc4b4e',
+      })
+    }
+  )
 }
 
-const handleUpdateProfile = () => {
-  Swal.fire({
-  text: 'Perfil atualizado com sucesso.',
-  confirmButtonText: 'ok',
-  confirmButtonColor: '#cc4b4e',
-})
-}
+const deleteAccount = async () => {
+  auth.deleteUser(() => {
+    Swal.fire({
+      text: 'Conta excluída com sucesso.',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#cc4b4e',
+    }),
+    router.push({ name: 'home' })
+  }, () => {
+    Swal.fire({
+      text: 'Erro ao excluir conta.',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#cc4b4e',
+    })
+  }
+)};
 
 const handleEdit = () => {
   isEditing.value = true
@@ -209,45 +241,38 @@ const handleEdit = () => {
 
 </script>
 <template>
-  <template v-if="isStoreExists || isEditing">
+  <template v-if="!isStoreExists || isEditing">
     <div class="main-container">
       <form>
         <ContainerStyled width="800px" height="4.5rem" backgroundColor="transparent">
           <TitleStyled className="title-styled" title="Edição de perfil" />
         </ContainerStyled>
           <InputStyled
-            v-model="fullName"
+            class="full-input"
+            v-model="name"
             id="fullName"
-            type="text"
-            width="100%"
-            height="2.8rem"
+            type="text"        
             placeholder="Digite seu nome completo"
-            borderColor="transparent"
-            :error="errors.fullName"
+            :error="errors.name"
             :handleChange="handleFullName"
           />
           <div class="data-container">
             <InputStyled
+              class="full-input"
               v-model="cpf"
               id="cpf"
-              type="string"
-              width="24rem"
-              height="2.8rem"
               placeholder="CPF (apenas números)"
-              borderColor="transparent"
               :error="errors.cpf"
               :handleChange="handleCpf"
               @input="handleCpfInput"
             />
             <InputStyled
-              v-model="phoneNumber"
+              v-model="phonenumber"
+              class="full-input"
               id="phoneNumber"
               type="string"
-              width="24rem"
-              height="2.8rem"
               placeholder="Telefone (apenas números)"
-              borderColor="transparent"
-              :error="errors.phoneNumber"
+              :error="errors.phonenumber"
               :handleChange="handlePhoneNumber"
               @input="handlePhoneInput"
             />
@@ -255,93 +280,80 @@ const handleEdit = () => {
           <div class="data-container">
             <div class="cepSearch">
               <InputStyled
+                class="full-input"
                 v-model="cep"
                 id="cep"
                 type="number"
-                width="24rem"
-                height="2.8rem"
                 placeholder="CEP (apenas números)"
-                borderColor="transparent"
                 :error="errors.cep"
                 :handleChange="handleCep"
               />
               <ButtonStyled
                 className="transparent-button-red-text"
                 label="Pesquisar CEP"
-                width="8rem"
-                height="2.8rem"
                 @click="addressSearch"
               />
             </div>
               <InputStyled
+              class="full-input"
               v-model="state"
               id="state"
               type="text"
               placeholder="Estado"
-              width="24rem"
-              height="2.8rem"
-              borderColor="transparent"
               disabled
             />
           </div>
           <div class="data-container">
             <InputStyled
+              class="full-input"
               v-model="city"
               id="city"
-              type="text"
-              width="24rem"
-              height="2.8rem"
+              type="text"             
               placeholder="Cidade"
-              borderColor="transparent"
               disabled
             />
             <InputStyled
+              class="full-input"
               v-model="neighborhood"
               id="neighborhood"
-              type="text"
-              width="24rem"
-              height="2.8rem"
+              type="text"            
               placeholder="Bairro"
-              borderColor="transparent"
               disabled
               />
           </div>
         <InputStyled
+          class="full-input"
           v-model="address"
           id="address"
-          type="text"
-          width="100%"
-          height="2.8rem"
+          type="text"       
           placeholder="Endereço"
-          borderColor="transparent"
           disabled
         />
         <div class="data-container">
           <InputStyled
-            v-model="numberAddress"
+            class="full-input"
+            v-model="numberaddress"
             id="numberAddress"
             type="number"
-            width="24rem"
-            height="2.8rem"
             placeholder="Número"
-            borderColor="transparent"
-            :error="errors.numberAddress"
+            :error="errors.numberaddress"
             :handleChange="handleNumberAddress"
           />
           <InputStyled
-            v-model="complementAddress"
+            class="full-input"
+            v-model="complementaddress"
             id="complementAddress"
             type="text"
-            width="24rem"
-            height="2.8rem"
             placeholder="Complemento (opcional)"
-            borderColor="transparent"
             :handleChange="handleComplementAddress"
           />
         </div>
+        <ButtonStyled className="transparent-button-red-text"
+              label="Excluir minha conta"
+              @click.prevent="deleteAccount"/>
         <div class="button-container">
           <ButtonStyled
-            @click.prevent="isEditing ? handleUpdateProfile() : handleCreateProfile()"
+            @click.prevent="handleCreateProfile()"
             type="submit"
             className="login-button"
             :label="isEditing ? 'Atualizar' : 'Enviar'"
@@ -355,30 +367,21 @@ const handleEdit = () => {
   <template v-else>
     <div class="main-container">
       <div class="profile">
-       
-          <TitleStyled className="title-styled" :title="`${fullName}`" class="title-styled" />
+          <TitleStyled className="title-styled" :title="`${name}`" class="title-styled" />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
             :text="`CPF: ${cpf}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
-            :text="`Telefone: ${phoneNumber}`"
+            :text="`Telefone: ${phonenumber}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
-            :text="`Endereço: ${address}, ${numberAddress}, ${complementAddress}, ${neighborhood}`"
+            :text="`Endereço: ${address}, ${numberaddress}, ${complementaddress}, ${neighborhood}`"
           />
           <TextStyled
             className="gray-text"
-            width=" 800px"
-            height="2.5rem"
             :text="`CEP: ${cep} - ${city} - ${state}`"
           />
           <div class="button-container">

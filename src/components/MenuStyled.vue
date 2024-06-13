@@ -1,3 +1,46 @@
+<template>
+  <nav class="navbar">
+    <div class="container-fluid">
+      <ImageStyled
+        imageUrl="../../images/logo.png"
+        altText="Logo com nome do app Link to Food em vermelho"
+        width="6rem"
+      />
+       <div class="nav-icon">
+        <div class="dropdown" @click="toggleNotificationDropdown">
+          <a class="icons" href="#">
+            <img src="../assets/notification-bell.svg" alt="Notification bell" height="24">
+            <span class="notification">1</span>
+          </a>
+          <ul class="dropdown-menu" v-if="showNotificationDropdown">
+            <li><a class="dropdown-item" href="#">Notificação 1</a></li>
+            <li><a class="dropdown-item" href="#">Notificação 2</a></li>
+          </ul>
+        </div>
+        <a class="icons" href="shoppingCart">
+          <img src="../assets/shopping-cart.svg" alt="Shopping cart" height="24"/>
+          <span class="notification">{{ totalItemsInCart }}</span>
+        </a>
+        <div class="dropdown" @click="toggleAvatarDropdown">
+          <a class="icons dropdown-toggle" href="#">
+            <img class="avatar-image" src="../../images/mood.png" alt="User image"/>
+          </a>
+          <ul class="dropdown-menu" v-if="showAvatarDropdown">
+            <li><a class="dropdown-item" href="home">Início</a></li>
+            <li><a class="dropdown-item" href="#">Pedidos</a></li>
+            <li><a class="dropdown-item" href="listingStores">Lojas</a></li>
+            <li><a class="dropdown-item" href="#">Estatísticas</a></li>
+            <li class="divider"></li>
+            <li><a class="dropdown-item" href="profile">Meu perfil</a></li>
+            <li><a class="dropdown-item" href="profile">Minha carteira</a></li>
+            <li><a @click="signOut" class="dropdown-item" href="#">Sair</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import ImageStyled from './ImageStyled.vue';
@@ -32,62 +75,7 @@ const signOut = () => {
     route.push('/signIn')
   })
 }
-
 </script>
-
-<template>
-  <nav class="navbar">
-    <div class="container-fluid">
-        <ImageStyled
-            imageUrl="../../images/logo.png"
-            altText="Logo com nome do app Link to Food em vermelho"
-            width="6rem"
-          />
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="home">Início</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pedidos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="listingStores">Lojas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Estatísticas</a>
-            </li>
-        </ul>
-
-        <div class="nav-icon">
-            <div class="dropdown" @click="toggleNotificationDropdown">
-                <a class="icons" href="#" >
-                    <img src="../assets/notification-bell.svg" alt="Notification bell" height="24">
-                    <span class="notification">1</span>
-                </a>
-                <ul class="dropdown-menu" v-if="showNotificationDropdown">
-                    <li><a class="dropdown-item" href="#">Notificação 1</a></li>
-                    <li><a class="dropdown-item" href="#">Notificação 2</a></li>
-                </ul>
-            </div>
-            <a class="icons" href="shoppingCart">
-              <img src="../assets/shopping-cart.svg" alt="Shopping cart" height="24"/>
-              <span class="notification">{{ totalItemsInCart }}</span>
-        </a>
-            <div class="dropdown" @click="toggleAvatarDropdown">
-                <a class="icons dropdown-toggle" href="#">
-                    <img class="avatar-image" src="../../images/mood.png" alt="User image"/>
-                </a>
-                <ul class="dropdown-menu" v-if="showAvatarDropdown">
-                    <li><a class="dropdown-item" href="profile">Meu perfil</a></li>
-                    <li><a class="dropdown-item" href="profile">Minha carteira</a></li>
-                    <li><a @click="signOut" class="dropdown-item" href="#">Sair</a></li>
-                </ul>
-            </div>
-        </div>
- 
-      </div>
-    </nav>
-  </template>
 
 <style scoped>
 a {
@@ -116,9 +104,11 @@ img {
   background-color: var(--white);
 }
 
-.navbar-nav {
-  display: flex;
-  gap: 30px;
+.navbar-toggler {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .nav-icon {
@@ -133,16 +123,6 @@ img {
 .nav-icon a {
     align-self: center;
     cursor: pointer;
-}
-
-
-.nav-link {
-  color: var(--dark-gray);
-  text-decoration: none;
-}
-
-.nav-link:hover {
-  color: var(--red);
 }
 
 .dropdown-menu {
@@ -162,7 +142,6 @@ img {
 .dropdown-item {
   color: var(--dark-blue);
   text-decoration: none;
-  
 }
 
 .dropdown-item:hover {
@@ -181,12 +160,41 @@ img {
     font-weight: 700;
 }
 
+@media (max-width: 768px) {
+  .container-fluid {
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+  .nav-icon {
+    width: 100%;
+    justify-content: end;
+  }
+}
 
-.navbar-collapse {
-  display: flex;
-  justify-content: space-around;
+@media (max-width: 576px) {
+  .navbar-nav {
+    display: none;
+  }
+  .nav-icon {
+    justify-content: end;
+    width: 100%;
+    gap: 5px
+  }
+  .nav-icon a {
+    margin-right: 10px;
+  }
+  .nav-link {
+    display: block;
+    margin: 10px 0;
+  }
 }
 </style>
+
 
 
   

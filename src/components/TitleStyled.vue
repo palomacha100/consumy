@@ -32,4 +32,14 @@ defineProps<{
   color: var(--dark-gray);
   font-size: 10px;
 }
+
+@media (max-width: 768px) {
+  .title-styled h1 {
+    font-size: 1.5rem;
+  }
+
+  .medium-title {
+    font-size: 14px;
+  }
+}
 </style>

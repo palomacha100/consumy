@@ -46,18 +46,6 @@ const totalCartPriceFormatted = computed(() => {
   return totalCartPrice.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 });
 
-const calculateTax = computed(() => {
-  return totalCartPrice.value * 0.02;
-});
-
-const calculateTaxFormatted = computed(() => {
-  return calculateTax.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-});
-
-const finalCartPriceFormatted = computed(() => {
-  const finalPrice = totalCartPrice.value + calculateTax.value;
-  return finalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-});
 </script>
 
 <template>
@@ -119,10 +107,8 @@ const finalCartPriceFormatted = computed(() => {
         </div>
         <div class="cart-summary">
           <p class="cart-info">Produtos: {{ totalCartPriceFormatted }}</p>
-          <p class="cart-info">Taxa: {{ calculateTaxFormatted }}</p>
-          <p class="cart-info">Frete: R$ 10,00</p>
           <TextStyled 
-          :text="`Total: ${finalCartPriceFormatted}`" 
+          :text="`Total: ${totalCartPriceFormatted}`" 
           className="subtitle" 
           height="2.5rem"
           />
@@ -205,6 +191,17 @@ const finalCartPriceFormatted = computed(() => {
     text-align: right;
   
     align-items: end;
+  }
+
+  @media (max-width: 768px) {
+    .cart-container {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .quantity-container {
+      gap: 0.25rem;
+    }
   }
 
   </style>
