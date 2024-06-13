@@ -15,7 +15,18 @@ class OrderService extends BaseService {
           onSuccess();
           cartState.cart = [];
           cartState.totalItemsInCart = 0;
-        } else {
+        } else if (paymentResponse.status === 401) {
+          const refresh_token = this.storage.get('refresh_token') || '[]';
+          const parseRefresh = refresh_token;
+          await this.auth.refreshTokens(parseRefresh);
+          const newResponse = await this.put
+            (`buyers/orders/${data.order.id}/pay`, payment)
+          if (newResponse.ok) {
+            onSuccess();
+            cartState.cart = [];
+            cartState.totalItemsInCart = 0;
+          }
+        else {
           onFailure();
         }
       } else {
@@ -23,6 +34,6 @@ class OrderService extends BaseService {
       }
     }
   }
-
+}
 
 export { OrderService }
