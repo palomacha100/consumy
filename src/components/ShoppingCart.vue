@@ -129,9 +129,6 @@ const totalCartPriceFormatted = computed(() => {
   .cart-container {
     width: 68.75rem;
     margin: 30px auto;
-    @media (max-width: 768px) {
-      width: 100%;
-    }
   }
   
   .empty-cart {
@@ -194,6 +191,17 @@ const totalCartPriceFormatted = computed(() => {
     text-align: right;
   
     align-items: end;
+  }
+
+  @media (max-width: 768px) {
+    .cart-container {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .quantity-container {
+      gap: 0.25rem;
+    }
   }
 
   </style>

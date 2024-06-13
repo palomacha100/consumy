@@ -37,5 +37,9 @@ defineProps<{
   .title-styled h1 {
     font-size: 1.5rem;
   }
+
+  .medium-title {
+    font-size: 14px;
+  }
 }
 </style>

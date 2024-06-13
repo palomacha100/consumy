@@ -103,19 +103,19 @@ const placeOrder = () => {
       <div class="payment-options">
         <label>
           Número do cartão
-          <input type="text" v-model="cardNumber" />
+          <input class="input-styled" type="text" v-model="cardNumber" />
         </label>
         <label>
           Nome no cartão
-          <input type="text" v-model="cardName" />
+          <input class="input-styled" type="text" v-model="cardName" />
         </label>
         <label>
           Data de Expiração
-          <input type="data" v-model="expirationData" placeholder="YYYY-MM-DD"/>
+          <input class="input-styled" type="data" v-model="expirationData" placeholder="YYYY-MM-DD"/>
         </label>
         <label>
           Código de segurança (CVV)
-          <input type="text" v-model="cvv" placeholder="XXX" maxlength="3"/>
+          <input class="input-styled" type="text" v-model="cvv" placeholder="XXX" maxlength="3"/>
         </label>
       </div>
     </section>
@@ -177,12 +177,12 @@ const placeOrder = () => {
 .delivery-address-info, .payment-options {
   display: flex;
   flex-direction: column;
-  margin: 5px;
+  margin: 0 5px;
   height: 100px;
   padding: 5px 0;
 }
 
-.payment-title, .delivery-title {
+.payment-title, .delivery-title, .order-summary {
   width: 300px;
 }
 
@@ -232,6 +232,88 @@ label, input {
   justify-content: center;
   align-items: center;
   margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .delivery-address, .payment-method, .order-review {
+    flex-direction: column;
+  }
+
+  .delivery-title, .payment-title {
+    width: 100%;
+  }
+  .payment-options {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+  label, input {
+    width: 100%;
+  }
+
+  .input-styled {
+    height: 30px;
+    margin-top: 5px;
+  }
+
+  .order-item {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .order-thumbnail {
+    width: 100%;
+    height: 100px;
+  }
+  .order-summary {
+    margin-top: 0;
+    height: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .checkout-container {
+    padding: 10px;
+  }
+  .delivery-address, .payment-method, .order-review {
+    flex-direction: column;
+    margin: 5px 0;
+    height: auto;
+  }
+  .delivery-title, .payment-title {
+    width: 100%;
+  }
+  .payment-options {
+    width: 100%;
+    height: auto;
+  }
+  label, input {
+    width: 100%;
+    height: auto;
+  }
+ 
+  .order-item {
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+  }
+  .order-thumbnail {
+    width: 100%;
+    height: 100px;
+  }
+  .order-details {
+    width: 100%;
+  }
+  .order-summary {
+    width: 100%;
+  }
+  .button-container {
+    width: 100%;
+  }
 }
 </style>
 

@@ -64,4 +64,10 @@ div {
   font-weight: 700;
 
 }
+
+@media (max-width: 768px) {
+  .gray-text p {
+    font-size: 0.875rem;
+  }
+}
 </style>
