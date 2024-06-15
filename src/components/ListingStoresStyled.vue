@@ -62,7 +62,7 @@ const showProducts = (id: number) => {
 
 <template>
   <div class="table-container">
-    <ContainerStyled width="68.75rem" height="3.5rem" backgroundColor="transparent">
+    <ContainerStyled backgroundColor="transparent">
       <TitleStyled className="title-styled" title="Lojas" />
     </ContainerStyled>
     <ContainerStyled width="68.75rem" height="3.5rem" :backgroundColor="'var(--light-red)'">
@@ -189,5 +189,15 @@ button:active {
 .status-button.inactive {
   background-color: var(--dark-gray);
   color: white;
+}
+
+@media (max-width: 768px) {
+
+  .table-container {
+    width: 100%;
+  }
+  table {
+    width: 100%;
+  }
 }
 </style>

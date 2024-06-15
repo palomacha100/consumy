@@ -36,6 +36,7 @@ defineProps<{
 @media (max-width: 768px) {
   .title-styled h1 {
     font-size: 1.5rem;
+    width: 100%;
   }
 
   .medium-title {
