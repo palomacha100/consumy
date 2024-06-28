@@ -39,6 +39,7 @@ const fetchProducts = async (storeId: number) => {
   await productService.getProducts(
     storeId,
     (data: any) => {
+      console.log(data)
       products.value = data.result.products || []
       if (products.value.length > 0) {
         products.value.forEach((product) => {
